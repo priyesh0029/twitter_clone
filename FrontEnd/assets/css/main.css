@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.transitionConfig {
+    transition: all 350ms ease-in-out;
+  }
+ 

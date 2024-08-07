@@ -15,17 +15,6 @@ export const tweetController = {
       const userId = req.query.userId;
       const { text } = req.body;
 
-    //   if (typeof userId !== 'string') {
-    //     return res.status(400).json({ success: false, message: 'Invalid user ID' });
-    //   }
-
-    //   // Check if user exists
-    //   const user = await User.findByPk(userId);
-
-    //   if (!user) {
-    //     return res.status(404).json({ success: false, message: 'User not found' });
-    //   }
-
       // Create tweet details
       const tweetDetails = {
         caption: text,
@@ -64,19 +53,18 @@ export const tweetController = {
   
       // const followingIds = user.following || [];
   
-      // Find all tweets from users in the following list
       const tweets = await Tweet.findAll({
         where: {
           // userId: followingIds,
-          isDeleted: false, // Assuming you want to exclude deleted tweets
+          isDeleted: false, 
         },
         include: [
           {
             model: User,
-            attributes: ['id', 'name', 'username', 'email'], // Include user details if needed
+            attributes: ['id', 'name', 'username', 'email'],
           },
         ],
-        order: [['createdAt', 'DESC']], // Order tweets by creation date, newest first
+        order: [['createdAt', 'DESC']],
       });
   
       res.status(200).json(tweets);

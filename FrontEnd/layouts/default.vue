@@ -10,24 +10,6 @@
           <div class="hidden sm:block sm:col-span-1 lg:col-span-2">
             <div class="sticky top-0">
               <SidebarLeft />
-              <!-- <div>
-                <ClientOnly>
-                  <UButton
-                    :icon="
-                      isDark
-                        ? 'i-heroicons-moon-20-solid'
-                        : 'i-heroicons-sun-20-solid'
-                    "
-                    color="gray"
-                    variant="ghost"
-                    aria-label="Theme"
-                    @click="isDark = !isDark"
-                  />
-                  <template #fallback>
-                    <div class="w-8 h-8" ></div>
-                  </template>
-                </ClientOnly>
-              </div> -->
             </div>
           </div>
           <!-- MAIN CONTENT -->
@@ -51,13 +33,3 @@
 
 </script>
 
-<!-- <style scoped>
-button {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  background: var(--color-background);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: 0.25rem;
-}
-</style> -->

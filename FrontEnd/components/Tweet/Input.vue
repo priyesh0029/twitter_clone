@@ -67,7 +67,9 @@
         </div>
       </div>
       <div class="ml-auto">
-        <UIButtonPost size="sm" :disabled = "isDisabled" @onClick="handleFormSubmit"><span class="font-bold">Tweet</span></UIButtonPost>
+        <UIButtonPost size="sm" :disabled = "isDisabled" @onClick="handleFormSubmit">
+          <span class="font-bold">Tweet</span>
+        </UIButtonPost>
       </div>
     </div>
   </div>

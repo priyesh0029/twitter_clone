@@ -16,22 +16,24 @@
     <!-- preview card - who to follow -->
     <SidebarRightPreviewCard title="Who to follow">
       <SidebarRightPreviewCardItem
-        v-for="(whoTofollow, index) in whoTofollowItems"
+        v-for="(whoToFollow, index) in whoTofollowItems"
         :key="index"
       >
         <div class="flex flex-row justify-between p-2 items-center ">
           <div class="flex flex-row">
             <img
               class="w-10 h-10 rounded-full"
-              :src="whoTofollow.image"
-              :alt="whoTofollow.name"
+              :src="whoToFollow.image"
+              :alt="whoToFollow.name"
             />
             <div class="flex flex-col ml-2">
-              <h1 class="text-sm font-bold text-gray-900 dark:text-white">{{ whoTofollow.name }}</h1>
-              <p class="text-xs text-gray-500">{{ whoTofollow.handle}}</p>
+              <h1 class="text-sm font-bold text-gray-900 dark:text-white">{{ whoToFollow.name }}</h1>
+              <p class="text-xs text-gray-500">{{ whoToFollow.username}}</p>
             </div>
           </div>
-          <button class=" h-full bg-black rounded-full font-bold text-xs px-3 py-2 text-white dark:bg-white dark:text-black">Follow</button>
+          <UIFollowButton @click="handleFollow(index,whoToFollow.id)">
+            {{ whoToFollow.buttonState }}
+          </UIFollowButton>
         </div>
       </SidebarRightPreviewCardItem>
     </SidebarRightPreviewCard>
@@ -39,16 +41,42 @@
 </template>
 
 <script setup>
+
 const whatsHappeningItems = ref([
   { item: "SpaceX", count: "18.8k Tweets" },
   { item: "SpaceX", count: "18.8k" },
 ]);
 
-const whoTofollowItems = ref([
-  {
-    name: " joe Biden",
-    handle: "@JoeBiden",
-    image: "https://picsum.photos/200/200",
-  },
-]);
+const { whoTofollow,handleFollowUnfollow} = useUser();
+
+const whoTofollowItems = ref([]);
+
+onBeforeMount(async () => {
+  try {
+    const response = await whoTofollow();
+    console.log("who to follow response: ", response);
+
+    whoTofollowItems.value = response.map(item => ({
+      ...item,
+      buttonState: 'follow'
+    }));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+async function handleFollow(index,userId) {
+  const item = whoTofollowItems.value[index];
+  const buttonState = item.buttonState
+  try {
+  item.buttonState = item.buttonState === 'follow' ? 'unfollow' : 'follow';
+  const response = await handleFollowUnfollow(userId)
+  console.log("response from handle folloe unfollw : ", response);
+  } catch (error) {
+    item.buttonState = buttonState
+    console.log(error);
+    
+  }
+  
+}
 </script>

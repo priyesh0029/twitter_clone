@@ -42,20 +42,20 @@ export const tweetController = {
 
   getAlltTweets : async (req, res) => {
     try {
-      const userId = req.params.userId;
+      const userId = req.query.userId;
   
       // Find the user to get the following list
-      // const user = await User.findByPk(userId);
+      const user = await User.findByPk(userId);
   
-      // if (!user) {
-      //   return res.status(404).json({ message: 'User not found' });
-      // }
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
   
-      // const followingIds = user.following || [];
+      const followingIds = user.following || [];
   
       const tweets = await Tweet.findAll({
         where: {
-          // userId: followingIds,
+          userId: followingIds,
           isDeleted: false, 
         },
         include: [

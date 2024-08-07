@@ -10,12 +10,14 @@
       </nuxt-link>
     </div>
     <div class="">
-      <SidebarLeftTab active>
-        <template v-slot:icon>
-          <HomeIcon />
-        </template>
-        <template v-slot:name> Home </template>
-      </SidebarLeftTab>
+      <nuxt-link :to="'/'">
+        <SidebarLeftTab active>
+          <template v-slot:icon>
+            <HomeIcon />
+          </template>
+          <template v-slot:name> Home </template>
+        </SidebarLeftTab>
+      </nuxt-link>
 
       <SidebarLeftTab>
         <template v-slot:icon>
@@ -52,12 +54,14 @@
         <template v-slot:name> Communities </template>
       </SidebarLeftTab>
 
-      <SidebarLeftTab>
-        <template v-slot:icon>
-          <UserIcon />
-        </template>
-        <template v-slot:name> Profile </template>
-      </SidebarLeftTab>
+      <nuxt-link :to="`/profile/${userId}`">
+        <SidebarLeftTab>
+          <template v-slot:icon>
+            <UserIcon />
+          </template>
+          <template v-slot:name> Profile </template>
+        </SidebarLeftTab>
+      </nuxt-link>
 
       <SidebarLeftTab>
         <template v-slot:icon>
@@ -109,7 +113,14 @@ import {
   DocumentTextIcon,
   PencilIcon,
 } from "@heroicons/vue/solid"; // for solid icons
+import { useUserStore } from "~/stores/useUserStore";
+
+const userStore = useUserStore();
 const colorMode = useColorMode();
+
+const userId = computed(() => {
+  return userStore.userInfo.id;
+});
 
 const isDark = computed({
   get() {

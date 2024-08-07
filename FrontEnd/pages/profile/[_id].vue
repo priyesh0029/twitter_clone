@@ -1,7 +1,7 @@
 <template>
     <div>
         <MainSection title="Profile" :loading="loading"> 
-            <p>User ID: {{ userId }}</p>
+            <Profile :userId="userId"/>
         </MainSection>
     </div>
 </template>

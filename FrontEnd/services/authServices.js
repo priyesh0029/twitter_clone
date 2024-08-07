@@ -15,8 +15,17 @@ export const srvLogin = async (api,credentials) => {
       console.log(response);
       return response.data;
     } catch (error) {
-        console.log("error after response - service : ",error);
-      throw new Error(error.response?.data?.message || 'Signup failed');
+        if (error.response) {
+            // Handle errors with response
+            console.log("Error response: ", error.response);
+            throw new Error(error.response.data.message || 'Signup failed');
+        } else {
+            // Handle errors without response
+            console.log("Error message: ", error.message);
+            throw new Error('Signup failed due to an unknown error');
+        }
+        // console.log("error after response - service : ",error);
+    //   throw new Error(error.response?.data?.message || 'Signup failed');
     }
   };
   

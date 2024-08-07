@@ -21,8 +21,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     (error) => {
       if (error.response) {
         // Display toast notification for errors
-        const toast = nuxtApp.$toast;
-        toast.error(error.response.data.message || 'An error occurred');
+        // const toast = nuxtApp.$toast;
+        // toast.error(error.response.data.message || 'An error occurred');
+        alert(error.response.data.message || 'An error occurred');
+
       }
       return Promise.reject(error);
     }

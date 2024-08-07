@@ -16,19 +16,20 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     unique: true, 
     allowNull: false,
-    primaryKey: true, 
   },
- 
   email: {
     type: DataTypes.STRING,
     unique: true, 
     allowNull: false,
-    primaryKey: true, 
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
+  following: {
+    type: DataTypes.ARRAY(DataTypes.UUID),
+    allowNull: true,
+  },
 }, {
   timestamps: true, 
 });

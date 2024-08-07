@@ -1,22 +1,26 @@
 <template>
-    <div>
-        <MainSection title="Home" :loading="loading"> 
-            this is our homepage
-        </MainSection>
-        <li><NuxtLink to="/profile/123">profile</NuxtLink></li>
-    </div>
+  <div>
+    <MainSection title="Home" :loading="loading">
+      <div class="border-b" :class="borderColorConfig">
+        <TweetForm />
+      </div>
+      <TweetListFeild/>
+    </MainSection>
+  </div>
 </template>
 
 <script setup>
+import { useUserStore } from "../stores/useUserStore";
 
-// definePageMeta({
-//   middleware : 'auth'
-// })
-const loading = ref(false)
-// const router = useRouter();
-function handleRoute (){
-    navigateTo('/profile/123');
-}
+const {borderColorConfig} = useTailwindConfig()
+
+const user = useUserStore();
+
+const loading = ref(false);
+
+onMounted(() => {
+  user.initialize();
+});
 </script>
 
 

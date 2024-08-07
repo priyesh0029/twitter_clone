@@ -9,16 +9,18 @@ module.exports = {
     "./error.vue",
   ],
   darkMode: 'class',
+  safelist : [
+    {
+      pattern : /text-(red|green|yellow|blue)-(100|400)/,
+      variants :['group-hover']
+    },
+    {
+      pattern : /bg-(red|green|yellow|blue)-(100|400)/,
+      variants :['group-hover']
+    }
+  ],
 
   theme: {
-
-    // screens: {
-    //   xs: "614px",
-    //   sm: "1002px",
-    //   md: "1022px",
-    //   lg: "1092px",
-    //   xl: "1280px",
-    // },
 
     extend: {
 

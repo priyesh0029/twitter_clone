@@ -23,6 +23,7 @@ const userAuthMiddleware = (rolehere) => {
         console.log("verified token : ", payload);
         const { id, role } = payload;
         req.query.userId = id;
+        console.log("verified token id: ", req.query.userId);
         if (role === rolehere) {
           next();
         } else if (role === rolehere) {

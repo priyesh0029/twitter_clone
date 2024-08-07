@@ -1,0 +1,1 @@
+export const POST_URL = "https://res.cloudinary.com/dsinpyvxb/image/upload/v1722865902/"

@@ -4,8 +4,8 @@
       class="p-2 my-1 hover:bg-blue-50 rounded-full w-min dark:hover:bg-white/20 transitionConfig"
     >
       <nuxt-link to="/">
-        <div class="w-8 h-8">
-          <LogosTwitterLogo />
+        <div>
+          <UIcon name="i-simple-icons-x" class="w-10 h-10 flex-shrink-0" />
         </div>
       </nuxt-link>
     </div>
@@ -65,6 +65,34 @@
         </template>
         <template v-slot:name> More </template>
       </SidebarLeftTab>
+
+      <div class="ml-2">
+        <ClientOnly>
+          <UButton
+            :icon="
+              isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'
+            "
+            color="gray"
+            variant="ghost"
+            aria-label="Theme"
+            @click="isDark = !isDark"
+          />
+          <template #fallback>
+            <div class="w-8 h-8"></div>
+          </template>
+        </ClientOnly>
+      </div>
+
+      <div class="hidden lg:block">
+        <UIButtonPost liquid siz="lg"
+          ><span class="font-bold">Tweet</span></UIButtonPost
+        >
+      </div>
+      <div class="block lg:hidden">
+        <UIButtonPost
+          ><div class="font-bold w-6 h-6"><PencilIcon /></div
+        ></UIButtonPost>
+      </div>
     </div>
   </div>
 </template>
@@ -79,5 +107,16 @@ import {
   DotsCircleHorizontalIcon,
   UserGroupIcon,
   DocumentTextIcon,
+  PencilIcon,
 } from "@heroicons/vue/solid"; // for solid icons
+const colorMode = useColorMode();
+
+const isDark = computed({
+  get() {
+    return colorMode.value === "dark";
+  },
+  set() {
+    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
+  },
+});
 </script>

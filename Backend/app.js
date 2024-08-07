@@ -9,6 +9,8 @@ import AppError from "./utilities/appError.js";
 import { v2 as cloudinary } from "cloudinary";
 import sequelize from "./config/dbConfig.js";
 import User from "./models/User.js";
+import Tweet from './models/Tweet.js';
+
 
 
 const app = express();

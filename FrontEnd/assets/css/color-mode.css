@@ -1,0 +1,13 @@
+/* assets/css/color-mode.css */
+body.dark-mode {
+    --color-background: #000000 !important;
+    --color-text: #ffffff !important;
+    background-color: var(--color-background) !important;
+    color: var(--color-text) !important;
+  }
+  
+  body.dark-mode * {
+    background-color: var(--color-background) !important;
+    color: var(--color-text) !important;
+  }
+  

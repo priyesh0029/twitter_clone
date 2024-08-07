@@ -2,11 +2,11 @@ import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 
-const posts = {
+const tweets = {
   cloudinary: cloudinary,
   params: {
     folder: "twitter_posts",
-    allowed_formats: ["jpg", "jpeg", "png", "svg", "webp"],
+    allowed_formats: ["jpg", "jpeg", "png", "svg", "webp","gif"],
     public_id: (req, file) => {
       console.log(file, "fileisssss");
       const originalname = file.originalname.split(".");
@@ -29,7 +29,7 @@ const userProImg = {
 };
 
 
-const twitterPosts = new CloudinaryStorage(posts);
+const twitterPosts = new CloudinaryStorage(tweets);
 const twitterProImg = new CloudinaryStorage(userProImg);
 
 const uploadTwitterPosts = multer({ storage: twitterPosts }).array("image", 5);

@@ -1,5 +1,5 @@
 <template>
-  <div class="m-2 border rounded-2xl bg-gray-50 dark:bg-dim-700 overflow-hidden" :class="borderColorConfig">
+  <div class="m-2 border rounded-2xl bg-gray-50 dark:bg-black overflow-hidden" :class="borderColorConfig">
     <h1 class="p-3 text-xl font-extrabold text-gray-900 border-b dark:text-white">
         {{ props.title }}
     </h1>

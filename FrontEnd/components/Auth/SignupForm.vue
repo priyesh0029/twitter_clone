@@ -10,12 +10,12 @@
             <!-- <UIInput value="" label="Re-password" placeholder="re-enter your password" v-model="data.repassword"/> -->
 
             <div>
-                <button @click="handleSignUp">Signup</button>
+                <UIButtonPost liquid :disabled="isButtonDisabled" @click="handleSignUp"><span>Signup</span></UIButtonPost>
             </div>
-            <p>or</p>
-            <div class="flex">
+            <p class="text-center">or</p>
+            <div class="flex justify-center items-center">
                 <p>already have an account!</p> <br>
-                <button @click="handleLogin">Login</button>
+                <button @click="handleLogin" class="text-blue-500 underline ml-2 text-lg">Login</button>
             </div>
         </div>
     </div>
@@ -41,5 +41,9 @@ const handleSignUp = async()=>{
 function handleLogin(){
     navigateTo('/login')
 }
+
+const isButtonDisabled = computed(()=>{
+    return(!data.username && !data.password && !data.email && !data.name)
+})
 
 </script>

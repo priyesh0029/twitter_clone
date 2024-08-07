@@ -3,7 +3,7 @@
     <label
       for=""
       v-if="props.label"
-      class="block pl-3 ml-px text-sm font-medium text-gray-700"
+      class="block pl-3 ml-px mb-1 text-sm font-medium text-gray-700"
       >{{ props.label }}</label
     >
     <input

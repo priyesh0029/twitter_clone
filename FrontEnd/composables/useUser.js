@@ -3,7 +3,7 @@
 import { useUserStore } from "~/stores/useUserStore";
 import { useNuxtApp } from "#app";
 import { srvLogin, srvSignup } from "~/services/authServices";
-import { srvGetWhoToFollow, srvHandleFollow, srvHandleProfile } from "~/services/userServices";
+import { srvChangePropic, srvGetWhoToFollow, srvHandleFollow, srvHandleProfile } from "~/services/userServices";
 
 export const useUser = () => {
   const { $api } = useNuxtApp();
@@ -51,10 +51,32 @@ export const useUser = () => {
     }
   }
 
+  //to change propic 
+  const changePropic = async (formData) => {
+    const data = new FormData()
+    data.append('image',formData.mediaFile)
+    
+
+    data.forEach((key, value) => {
+      console.log(
+        "post in front end formdata key and value  : ",
+        key,
+        value
+      );
+    });
+  try {
+      const response = await srvChangePropic($api, data);
+      console.log("response after fetching data : ", response);
+     
+  } catch (error) {
+   console.log(error);
+  }
+};
 
   return {
     whoTofollow,
     handleFollowUnfollow,
-    handleProfileDetails
+    handleProfileDetails,
+    changePropic
   };
 };

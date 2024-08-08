@@ -41,6 +41,8 @@
           Following <span class="font-semibold text-black dark:text-white">{{ followingCount }}</span>
         </div>
       </div>
+
+      
     </div>
 
     <!-- Tabs -->
@@ -58,6 +60,7 @@
         {{ tab }}
       </button>
     </div>
+    <TweetListFeild page="profile" :tweets="tweets"/>
   </div>
 </template>
   
@@ -65,7 +68,7 @@
 import { CalendarIcon, PencilAltIcon, PencilIcon, UserCircleIcon } from "@heroicons/vue/solid";
 import moment from 'moment';
 
-const {handleProfileDetails} = useUser()
+const {handleProfileDetails,changePropic} = useUser()
 
 const props = defineProps({
   userId: {
@@ -79,18 +82,19 @@ const selectedFile = ref(null);
 const userInfo = ref({});
 const tweets = ref([]);
 
+
 onBeforeMount(async () => {
   const response = await handleProfileDetails(props.userId);
   console.log('handleProfileDetails inside component profile: ', response.data);
-  userInfo.value = response.data.user;
-  tweets.value = response.data.tweets;
+  userInfo.value = response.data[0].User;
+   tweets.value = response.data;
 });
 
 const tabs = ["Post", "Replies", "Highlight", "Likes", "Media", "Community"];
 const activeTab = ref("Post");
 const isHovered = ref(false);
 
-function handleImageChange(event) {
+async function handleImageChange(event) {
   const file = event.target.files[0];
   selectedFile.value = file;
 
@@ -99,6 +103,16 @@ function handleImageChange(event) {
     inputImageUrl.value = event.target.result;
   };
   reader.readAsDataURL(file);
+
+  const formData = {mediaFile : [selectedFile.value]}
+
+  try {
+    const response = await changePropic(formData)
+    console.log(response);
+    
+  } catch (error) {
+    
+  }
 }
 
 function handleImageClick() {

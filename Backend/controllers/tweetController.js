@@ -25,11 +25,19 @@ export const tweetController = {
 
       // Create new tweet
       const newTweet = await Tweet.create(tweetDetails);
+      const tweetWithUser = await Tweet.findOne({
+        where: { id: newTweet.id },
+        include: [{
+          model: User,
+          attributes: ['id', 'name', 'username', 'email']  // Specify which attributes of the User model to include
+        }]
+      });
+      
 
       return res.status(201).json({
         success: true,
         message: 'Tweet created successfully',
-        data: newTweet,
+        data: tweetWithUser,
       });
     } catch (error) {
       console.error('Error creating tweet:', error);

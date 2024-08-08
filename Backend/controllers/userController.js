@@ -133,35 +133,77 @@ export const userController = {
       }
   
       try {
-        const userDetails = await User.findOne({
-          where: { id: userId },
-          attributes: ['id', 'name', 'username', 'email', 'profileImage', 'following', 'followers', 'createdAt'],
-        });
-
-        if (!userDetails) {
-          return res.status(404).json({ success: false, message: 'User not found' });
-        }
-        
-        const tweets = await Tweet.findAll({
+        // Fetch user details along with their tweets
+        const user = await Tweet.findAll({
           where: {
             userId: userId,
-            isDeleted: false,
+            isDeleted: false, 
           },
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name', 'username', 'email','profileImage','following','followers','createdAt'],
+            },
+          ],
           order: [['createdAt', 'DESC']],
         });
+    
+  
+        if (!user) {
+          return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        console.log("user with user and tweet details :" ,user);
         
-        const result = {
-          user: userDetails,
-          tweets: tweets,
-        };
   
         return res.status(200).json({
           success: true,
           message: 'User profile fetched successfully',
-          data: result,
+          data: user,
         });
       } catch (error) {
         console.error('Error fetching user profile:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+      }
+    }),
+
+    changepropic: asyncHandler(async (req, res) => {
+      try {
+        const media = req.files;
+        let filename;
+        
+        if (media && media.length > 0 && media[0].filename) {
+          filename = media[0].filename;
+        }
+    
+        const userId = req.query.userId;
+    
+        if (!userId || typeof userId !== 'string') {
+          return res.status(400).json({ success: false, message: 'Invalid user ID' });
+        }
+        
+        console.log("usert indside change propic function : ",userId,filename);
+        
+        // Update the user's profile image
+        const [affectedCount] = await User.update(
+          { profileImage: filename },
+          { where: { id: userId } }
+        );
+        console.log("usert indside change propic function 22222: ",affectedCount);
+    
+        if (affectedCount > 0 ) {
+          return res.status(201).json({
+            success: true,
+            message: 'Profile image changed successfully',
+          });
+        } else {
+          return res.status(404).json({
+            success: false,
+            message: 'User not found',
+          });
+        }
+      } catch (error) {
+        console.error('Error changing profile picture:', error);
         return res.status(500).json({ success: false, message: 'Internal server error' });
       }
     }),

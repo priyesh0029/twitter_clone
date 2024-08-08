@@ -7,7 +7,7 @@
     </div>
     <div
       v-else
-      v-for="tweet in postDetails.posts"
+      v-for="tweet in tweets"
       :key="tweet.id"
       class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300 transitionConfig"
       :class="borderColorConfig"
@@ -26,6 +26,19 @@ const { getTweets } = usePost();
 
 const postDetails = usePostStore();
 
+const props = defineProps({
+  page :{
+    type: String,
+    required : false
+  },
+  tweets :{
+    type : Array,
+    required : false
+  }
+})
+
+const tweets = computed(()=> props.page === 'profile'? props.tweets :postDetails.posts )
+
 
 onBeforeMount(async () => {
   try {
@@ -38,5 +51,7 @@ onBeforeMount(async () => {
   }
 });
 
-const isNoTweets = computed(()=> postDetails.posts.length === 0)
+// const isNoTweets = computed(()=> postDetails.posts.length === 0)
+const isNoTweets = computed(()=> tweets.length === 0)
+
 </script>

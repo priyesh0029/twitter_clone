@@ -21,7 +21,7 @@ const userProImg = {
     folder: 'twitter_user_img',
     allowed_formats: ['jpg', 'jpeg', 'png', 'svg', 'webp'],
     public_id: (req, file) => {
-      console.log(file, 'category file');
+      console.log(file, 'twitter_user_img file');
       const originalname = file.originalname.split('.');
       return `twitter_user_img-${Date.now()}-${originalname[0]}`;
     }

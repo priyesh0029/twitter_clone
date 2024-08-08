@@ -35,3 +35,16 @@ export const srvGetWhoToFollow = async (api) => {
       throw new Error(error.response?.data?.message || 'Login failed');
     }
   };
+
+  export const srvChangePropic = async (api,data) => {
+    try {
+      const response = await api.post('/user/changepropic', data,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
+  };

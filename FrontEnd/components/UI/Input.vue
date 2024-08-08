@@ -8,7 +8,8 @@
     >
     <input
       :value="props.modelValue" @input="event => emits('update:modelValue', event.target.value)"
-      class="w-full block px-4 border-gray-300 rounded-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      class="w-full block px-4 border-gray-300 rounded-full shadow-sm 
+      focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-black"
       :placeholder="props.placeholder" :type="props.type" :id="props.id"
       />
   </div>

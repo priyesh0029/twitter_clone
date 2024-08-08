@@ -2,6 +2,7 @@ import User from '../models/User.js';
 import Tweet from '../models/Tweet.js';
 import asyncHandler from 'express-async-handler';
 import AppError from '../utilities/appError.js';
+import { Op } from 'sequelize';
 
 export const tweetController = {
   createTweet: asyncHandler(async (req, res) => {
@@ -52,10 +53,13 @@ export const tweetController = {
       }
   
       const followingIds = user.following || [];
+      const userIds = [userId, ...followingIds];
   
       const tweets = await Tweet.findAll({
         where: {
-          userId: followingIds,
+          userId: {
+            [Op.or]: userIds,
+          },
           isDeleted: false, 
         },
         include: [

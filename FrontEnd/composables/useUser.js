@@ -3,7 +3,7 @@
 import { useUserStore } from "~/stores/useUserStore";
 import { useNuxtApp } from "#app";
 import { srvLogin, srvSignup } from "~/services/authServices";
-import { srvGetWhoToFollow, srvHandleFollow } from "~/services/userServices";
+import { srvGetWhoToFollow, srvHandleFollow, srvHandleProfile } from "~/services/userServices";
 
 export const useUser = () => {
   const { $api } = useNuxtApp();
@@ -17,7 +17,7 @@ export const useUser = () => {
   const whoTofollow = async () => {
     try {
         const response = await srvGetWhoToFollow($api);
-        console.log("response after fetching data : ", response.data);
+        console.log("response after fetching data : whoTofollow", response.data);
         // postStore.setPosts(response);
         return response.data
     } catch (error) {
@@ -30,7 +30,20 @@ export const useUser = () => {
     
     try {
         const response = await srvHandleFollow($api,userId);
-        console.log("response after fetching data : ", response.data);
+        console.log("response after fetching data handleFollowUnfollow: ", response.data);
+        // postStore.setPosts(response);
+        return response.data
+    } catch (error) {
+     console.log(error);
+    }
+  }
+
+  const handleProfileDetails = async (userId)=>{
+    console.log("userId 11 : ",  userId);
+    
+    try {
+        const response = await srvHandleProfile($api,userId);
+        console.log("response after fetching data handleProfileDetails: ", response.data);
         // postStore.setPosts(response);
         return response.data
     } catch (error) {
@@ -41,6 +54,7 @@ export const useUser = () => {
 
   return {
     whoTofollow,
-    handleFollowUnfollow
+    handleFollowUnfollow,
+    handleProfileDetails
   };
 };

@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import User from "../models/User.js";
+import Tweet from '../models/Tweet.js';
 import asyncHandler from "express-async-handler";
 import sequelize from "../config/dbConfig.js";
 
@@ -122,4 +123,47 @@ export const userController = {
       res.status(500).json({ message: "error occured during follow/unfollow request" });
     }
   }),
+
+  hanldeProfile: asyncHandler(async (req, res) => {
+      const userId = req.params.userId;
+      console.log("userId : ", userId);
+  
+      if (typeof userId !== 'string') {
+        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+      }
+  
+      try {
+        const userDetails = await User.findOne({
+          where: { id: userId },
+          attributes: ['id', 'name', 'username', 'email', 'profileImage', 'following', 'followers', 'createdAt'],
+        });
+
+        if (!userDetails) {
+          return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        
+        const tweets = await Tweet.findAll({
+          where: {
+            userId: userId,
+            isDeleted: false,
+          },
+          order: [['createdAt', 'DESC']],
+        });
+        
+        const result = {
+          user: userDetails,
+          tweets: tweets,
+        };
+  
+        return res.status(200).json({
+          success: true,
+          message: 'User profile fetched successfully',
+          data: result,
+        });
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+      }
+    }),
+
 };

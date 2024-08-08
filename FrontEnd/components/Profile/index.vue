@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center w-full max-w-md mx-auto mt-8">
+  <div class="flex flex-col items-center w-full mx-auto mt-8">
     
     <div class="relative group">
       <img 
@@ -27,18 +27,18 @@
 
     <!-- User Info -->
     <div class="text-center mt-4">
-      <div class="text-xl font-semibold">Priyesh ML</div>
-      <div class="text-gray-500">@priyesh007</div>
+      <div class="text-xl font-semibold">{{ userInfo.name }}</div>
+      <div class="text-gray-500">@{{ userInfo.username }}</div>
       <div class="text-gray-400 mt-2 flex items-center justify-center">
         <CalendarIcon class="w-8 h-8 ml-2" />
-        Joined January 2022
+        Joined {{formattedJoinDate}}
       </div>
-      <div class="flex space-x-4 mt-4">
+      <div class="flex space-x-4 ml-2 mt-4">
         <div class="text-gray-600">
-          Followers <span class="font-semibold">0</span>
+          Followers <span class="font-semibold text-black dark:text-white">{{followersCount}}</span>
         </div>
         <div class="text-gray-600">
-          Following <span class="font-semibold">0</span>
+          Following <span class="font-semibold text-black dark:text-white">{{ followingCount }}</span>
         </div>
       </div>
     </div>
@@ -63,9 +63,9 @@
   
   <script setup>
 import { CalendarIcon, PencilAltIcon, PencilIcon, UserCircleIcon } from "@heroicons/vue/solid";
-import { useUserStore } from "~/stores/useUserStore";
+import moment from 'moment';
 
-const user = useUserStore()
+const {handleProfileDetails} = useUser()
 
 const props = defineProps({
   userId: {
@@ -76,6 +76,15 @@ const props = defineProps({
 const imageInput = ref();
 const inputImageUrl = ref(null);
 const selectedFile = ref(null);
+const userInfo = ref({});
+const tweets = ref([]);
+
+onBeforeMount(async () => {
+  const response = await handleProfileDetails(props.userId);
+  console.log('handleProfileDetails inside component profile: ', response.data);
+  userInfo.value = response.data.user;
+  tweets.value = response.data.tweets;
+});
 
 const tabs = ["Post", "Replies", "Highlight", "Likes", "Media", "Community"];
 const activeTab = ref("Post");
@@ -95,6 +104,19 @@ function handleImageChange(event) {
 function handleImageClick() {
   imageInput.value.click();
 }
+
+const formattedJoinDate = computed(() => {
+  return userInfo.value.createdAt ? moment(userInfo.value.createdAt).format('MMMM YYYY') : '';
+});
+
+const followersCount = computed(() => {
+  return userInfo.value.followers ? userInfo.value.followers.length : 0;
+});
+
+const followingCount = computed(() => {
+  return userInfo.value.following ? userInfo.value.following.length : 0;
+});
+
 </script>
   
 

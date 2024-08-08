@@ -1,7 +1,7 @@
 <template>
     <div>
         <MainSection title="Profile" :loading="loading"> 
-            <Profile :userId="userId"/>
+            <Profile :userId="userId" class="w-full"/>
         </MainSection>
     </div>
 </template>

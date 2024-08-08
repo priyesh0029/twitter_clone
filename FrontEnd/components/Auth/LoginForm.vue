@@ -26,6 +26,10 @@ const data = reactive({
 //     alert(JSON.stringify(data))
 // }
 const handleLogin = async () => {
+    if (!data.username || !data.password) {
+    alert("Please fill in both fields.");
+    return;
+  }
   await login(data);
 };
 
@@ -33,8 +37,8 @@ function handleSignUp(){
     navigateTo('/signup')
 }
 
-const isButtonDisabled = computed(()=> {
-    return(!data.username && data.password)
-})
+const isButtonDisabled = computed(() => {
+    return !(data.username && data.password);
+});
 
 </script>

@@ -24,7 +24,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  // router: {
-  //   middleware: ['auth']
-  // }
+  router: {
+    middleware: ['auth']
+  }
 });

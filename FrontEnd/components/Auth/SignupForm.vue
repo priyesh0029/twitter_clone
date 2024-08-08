@@ -43,7 +43,7 @@ function handleLogin(){
 }
 
 const isButtonDisabled = computed(()=>{
-    return(!data.username && !data.password && !data.email && !data.name)
+    return !(data.username && data.password && data.email && data.name)
 })
 
 </script>

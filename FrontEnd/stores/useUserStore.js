@@ -55,8 +55,8 @@ import { defineStore } from 'pinia';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    userInfo: {}, // Default state for userInfo
-    token: '', // Default state for token
+    userInfo: {},
+    token: '', 
     isInitialized: false,
   }),
   actions: {

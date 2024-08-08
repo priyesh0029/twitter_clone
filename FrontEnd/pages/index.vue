@@ -21,6 +21,10 @@ const loading = ref(false);
 onMounted(() => {
   user.initialize();
 });
+
+definePageMeta({
+  middleware : 'auth'
+})
 </script>
 
 

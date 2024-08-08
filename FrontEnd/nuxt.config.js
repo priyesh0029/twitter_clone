@@ -24,7 +24,8 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  router: {
-    middleware: ['auth']
+  routeRules :{
+    '/login' : { ssr : false},
+    '/' :{ssr : false},
   }
 });

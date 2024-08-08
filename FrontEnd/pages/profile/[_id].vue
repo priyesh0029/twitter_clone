@@ -10,4 +10,8 @@
 const loading = ref(false)
 const route =  useRoute()
 const userId = route.params._id || null
+
+definePageMeta({
+  middleware : 'auth'
+})
 </script>

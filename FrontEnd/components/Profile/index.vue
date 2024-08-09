@@ -60,7 +60,7 @@
         {{ tab }}
       </button>
     </div>
-    <TweetListFeild page="profile" :tweets="tweets"/>
+    <TweetListFeild page="'profile'" :tweets="tweets"/>
   </div>
 </template>
   
@@ -85,8 +85,8 @@ const tweets = ref([]);
 
 onBeforeMount(async () => {
   const response = await handleProfileDetails(props.userId);
-  console.log('handleProfileDetails inside component profile: ', response.data);
-  userInfo.value = response.data[0].User;
+  console.log('handleProfileDetails inside component profile: ', response);
+  userInfo.value = response.data[0].user;
    tweets.value = response.data;
 });
 

@@ -6,8 +6,8 @@ import { uploadTwitterProImg } from "../middlewares/multer.js";
 const userRouter = (router)=>{
     router.get('/whotofollow',userController.getWhoToFollow)
     router.patch('/hanldefollow',userController.handleFollowUnfollow)
-    router.get('/hanldeprofile/:userId',userController.hanldeProfile)
-    router.post('/changepropic',uploadTwitterProImg,userController.changepropic)
+    router.get('/hanldeprofile/:userId',userController.handleProfile)
+    // router.post('/changepropic',uploadTwitterProImg,userController.changepropic)
 
 
    

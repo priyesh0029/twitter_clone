@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="loading" class="h-screen flex justify-center items-center">
+      <UISpinner/>
+    </div>
     <div v-if="isNoTweets">
        <div class="flex justify-center mt-10 bg-white dark:bg-black">
         <h1 class="text-black dark:text-white">No Tweets for you..!</h1>
@@ -29,18 +32,19 @@ const postDetails = usePostStore();
 const props = defineProps({
   page :{
     type: String,
-    required : false
+    required : true
   },
   tweets :{
     type : Array,
     required : false
   }
 })
+console.log("props.page : ",props.page);
 
 const tweets = computed(()=> props.page === 'profile'? props.tweets :postDetails.posts )
 
 
-onBeforeMount(async () => {
+onMounted(async () => {
   try {
     loading.value = true;
     const response = await getTweets();

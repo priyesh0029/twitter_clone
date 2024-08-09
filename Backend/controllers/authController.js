@@ -2,26 +2,17 @@ import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 import AppError from "../utilities/appError.js";
 import { authServices } from "../middlewares/authServices.js";
-import { Sequelize } from "sequelize";
-
 
 export const authControllers = {
-
-  //user Register
-
-   registerUser : asyncHandler(async (req, res) => {
+  // User Register
+  registerUser: asyncHandler(async (req, res) => {
     const { name, username, email, password } = req.body;
   
     // Check for existing user with the same email or username
-    const existingUser = await User.findOne({
-      where: {
-        [Sequelize.Op.or]: [
-          { email },
-          { username }
-        ]
-      }
-    });
-  
+    const existingUser = await User.query().where(builder => {
+      builder.where('email', email).orWhere('username', username);
+    }).first();
+
     if (existingUser) {
       throw new AppError(
         "User with the same email or username already exists",
@@ -33,7 +24,7 @@ export const authControllers = {
     const hashedPassword = await authServices.encryptPassword(password);
   
     // Create the new user
-    const newUser = await User.create({
+    const newUser = await User.query().insert({
       name,
       username,
       email,
@@ -42,7 +33,7 @@ export const authControllers = {
   
     // Generate token
     const token = await authServices.generateToken({
-      id: newUser.id.toString(), // Use .id for Sequelize
+      id: newUser.id, // Use .id for Objection.js
       role: "user",
     });
   
@@ -60,9 +51,8 @@ export const authControllers = {
     });
   }),
   
-
-  //user login
-  loginUser : asyncHandler(async (req, res) => {
+  // User Login
+  loginUser: asyncHandler(async (req, res) => {
     console.log("login user controller : ", req.body);
     const { username, password } = req.body;
 
@@ -70,15 +60,11 @@ export const authControllers = {
     if (!username || !password) {
         throw new AppError("Login credential and password are required", 400);
     }
-    // Find the user based on email, username,
-    const user = await User.findOne({
-        where: {
-            [Sequelize.Op.or]: [
-                { email: username },
-                { username: username },
-            ]
-        }
-    });
+
+    // Find the user based on email or username
+    const user = await User.query().where(builder => {
+      builder.where('email', username).orWhere('username', username);
+    }).first();
 
     if (!user) {
         throw new AppError("Invalid login credentials", 401);
@@ -109,6 +95,5 @@ export const authControllers = {
           token,
         },
     });
-})
-
-}
+  })
+};

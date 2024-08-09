@@ -7,10 +7,10 @@
             <UserCircleIcon class="w-10 h-10" />
         </div>  
         <div class="ml-3">
-            <span class="font-medium text-gray-800 dark:text-white">{{ props.tweet.User.name }}</span>
+            <span class="font-medium text-gray-800 dark:text-white">{{ props.tweet.user.name }}</span>
         </div>
         <span class="ml-3 text-sm font-medium text-gray-400">
-            <nuxt-link to="#">@{{ props.tweet.User.username }}</nuxt-link>
+            <nuxt-link to="#">@{{ props.tweet.user.username }}</nuxt-link>
             .{{humanReadableTime}}
         </span>
     </div>
@@ -27,7 +27,7 @@ const props = defineProps({
     }
 })
 
-const humanReadableTime = humanizeTime(props.tweet.createdAt);
+const humanReadableTime = humanizeTime(props.tweet.created_at);
 
 
 </script>

@@ -7,9 +7,7 @@ import routes from "./routes/indexRoute.js";
 import errorHandlingMiddleware from "./middlewares/errorHandlingMiddleware.js";
 import AppError from "./utilities/appError.js";
 import { v2 as cloudinary } from "cloudinary";
-import sequelize from "./config/dbConfig.js";
-import User from "./models/User.js";
-import Tweet from './models/Tweet.js';
+import knex from "./config/knex.js";
 
 
 
@@ -30,19 +28,21 @@ cloudinary.config({
 dotenv.config();
 const PORT = process.env.PORT;
 
-//db config
-
-sequelize.sync()
-.then(() => {
-  console.log('Database & tables created!');
-})
-.catch(error => {
-  console.error('Error creating database & tables:', error);
-});
 
 app.listen(PORT, () => {
   console.log(`connected to port ${PORT}`);
 });
+
+
+//db config
+//knex.once connected
+knex.raw('SELECT 1+1 as result').then(() => {
+  console.log('connected to database');
+}).catch((err) => {
+  console.log(err);
+  process.exit(1);
+});
+
 
 
 app.use(errorHandlingMiddleware) 

@@ -2,19 +2,25 @@ import User from '../models/User.js';
 import Tweet from '../models/Tweet.js';
 import asyncHandler from 'express-async-handler';
 import AppError from '../utilities/appError.js';
-import { Op } from 'sequelize';
 
 export const tweetController = {
   createTweet: asyncHandler(async (req, res) => {
     try {
       const media = req.files;
-      let filenames;
+      let filenames
       if (media !== undefined && media.length !== 0) {
         filenames = media.map((element) => element.filename);
       }
 
       const userId = req.query.userId;
       const { text } = req.body;
+
+      console.log("filename array after updating cloudinary : ",filenames);
+      if (!Array.isArray(filenames) || !filenames.every(item => typeof item === 'string')) {
+        throw new Error('imgNames should be an array of strings.');
+      }
+      // const formattedArrayString = `{${filenames.join(',')}}`;
+
 
       // Create tweet details
       const tweetDetails = {
@@ -24,15 +30,12 @@ export const tweetController = {
       };
 
       // Create new tweet
-      const newTweet = await Tweet.create(tweetDetails);
-      const tweetWithUser = await Tweet.findOne({
-        where: { id: newTweet.id },
-        include: [{
-          model: User,
-          attributes: ['id', 'name', 'username', 'email']  // Specify which attributes of the User model to include
-        }]
-      });
-      
+      const newTweet = await Tweet.query().insert(tweetDetails);
+
+      // Fetch the tweet along with user details
+      const tweetWithUser = await Tweet.query()
+        .findById(newTweet.id)
+        .withGraphFetched('user');
 
       return res.status(201).json({
         success: true,
@@ -45,45 +48,34 @@ export const tweetController = {
     }
   }),
 
-
-
-  //TO GET getAllTweets
-
-  getAlltTweets : async (req, res) => {
+  // Get all tweets
+  getAllTweets: asyncHandler(async (req, res) => {
     try {
       const userId = req.query.userId;
-  
+
       // Find the user to get the following list
-      const user = await User.findByPk(userId);
-  
+      const user = await User.query().findById(userId);
+
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-  
+
       const followingIds = user.following || [];
       const userIds = [userId, ...followingIds];
-  
-      const tweets = await Tweet.findAll({
-        where: {
-          userId: {
-            [Op.or]: userIds,
-          },
-          isDeleted: false, 
-        },
-        include: [
-          {
-            model: User,
-            attributes: ['id', 'name', 'username', 'email'],
-          },
-        ],
-        order: [['createdAt', 'DESC']],
+
+      const tweets = await Tweet.query()
+        .whereIn('userId', userIds)
+        .where('isDeleted', false)
+        .withGraphFetched('user')
+        .orderBy('created_at', 'desc');
+
+      res.status(200).json({
+        success: true,
+        data: tweets,
       });
-  
-      res.status(200).json(tweets);
     } catch (error) {
       console.error('Error fetching tweets:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  },
-
+  }),
 };

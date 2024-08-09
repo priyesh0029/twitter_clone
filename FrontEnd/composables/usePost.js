@@ -34,7 +34,7 @@ export const usePost =  () => {
     try {
         const response = await srvGetPost($api);
         console.log("response after fetching data : ", response);
-        postStore.setPosts(response);
+        postStore.setPosts(response.data);
     } catch (error) {
      console.log(error);
     }

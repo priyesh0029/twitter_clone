@@ -34,8 +34,13 @@ const data = reactive({
 
 const handleSignUp = async()=>{
     // const credentials = { email: email.value, password: password.value };
+   try {
     console.log(data);
     await signup(data);
+   } catch (error) {
+    console.log(error);
+    
+   }
 }
 
 function handleLogin(){

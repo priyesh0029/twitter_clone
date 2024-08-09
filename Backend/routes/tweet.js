@@ -4,7 +4,7 @@ import { uploadTwitterPosts } from "../middlewares/multer.js"
 
 const tweetRouter = (router)=>{
     router.post('/create',uploadTwitterPosts,tweetController.createTweet)
-    router.get('/tweets',tweetController.getAlltTweets)
+    router.get('/tweets',tweetController.getAllTweets)
    
     return router;
 }

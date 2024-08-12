@@ -87,7 +87,12 @@ onBeforeMount(async () => {
   const response = await handleProfileDetails(props.userId);
   console.log('handleProfileDetails inside component profile: ', response);
   userInfo.value = response.data[0].user;
-   tweets.value = response.data;
+  if(!response.data[0].id){
+    tweets.value = [];
+    }else{
+    tweets.value = response.data;
+
+  }
 });
 
 const tabs = ["Post", "Replies", "Highlight", "Likes", "Media", "Community"];
@@ -120,7 +125,7 @@ function handleImageClick() {
 }
 
 const formattedJoinDate = computed(() => {
-  return userInfo.value.createdAt ? moment(userInfo.value.createdAt).format('MMMM YYYY') : '';
+  return userInfo.value.created_at ? moment(userInfo.value.created_at).format('MMMM YYYY') : '';
 });
 
 const followersCount = computed(() => {

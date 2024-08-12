@@ -92,12 +92,22 @@ export const userController = {
 
     try {
       // Fetch user's tweets
-      const tweets = await Tweet.query()
+      let tweets = []
+       tweets = await Tweet.query()
         .where({ userId: userId, isDeleted: false })
         .withGraphFetched('user')
         .orderBy('created_at', 'DESC');
 
       console.log("User with user and tweet details:", tweets);
+
+      if(tweets.length === 0){
+       const user = await User.query()
+        .where({ id: userId, isDeleted: false })
+        .first()
+
+        tweets.push({user})
+       
+      }
 
       return res.status(200).json({
         success: true,

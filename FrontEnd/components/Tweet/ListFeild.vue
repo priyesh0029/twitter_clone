@@ -10,7 +10,7 @@
     </div>
     <div
       v-else
-      v-for="tweet in tweets"
+      v-for="tweet in props.tweets"
       :key="tweet.id"
       class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300 transitionConfig"
       :class="borderColorConfig"
@@ -36,26 +36,26 @@ const props = defineProps({
   },
   tweets :{
     type : Array,
-    required : false
+    required : true
   }
 })
 console.log("props.page : ",props.page);
 
-const tweets = computed(()=> props.page === 'profile'? props.tweets :postDetails.posts )
+// const tweets = computed(()=> props.page === 'profile'? props.tweets :postDetails.posts )
 
 
-onMounted(async () => {
-  try {
-    loading.value = true;
-    const response = await getTweets();
-  } catch (error) {
-    console.log(error);
-  } finally {
-    loading.value = false;
-  }
-});
+// onMounted(async () => {
+//   try {
+//     loading.value = true;
+//     const response = await getTweets();
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     loading.value = false;
+//   }
+// });
 
 // const isNoTweets = computed(()=> postDetails.posts.length === 0)
-const isNoTweets = computed(()=> tweets.length === 0)
+const isNoTweets = computed(()=> props.tweets.length === 0)
 
 </script>

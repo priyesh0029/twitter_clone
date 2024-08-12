@@ -5,7 +5,7 @@
         <TweetForm />
       </div>
       <!-- <TweetListFeild page="Home" :tweets="tweets"/> -->
-      <TweetListFeild page="Home"/>
+      <TweetListFeild page="Home" :tweets="tweets"/>
     </MainSection>
   </div>
 </template>
@@ -16,27 +16,27 @@ import { useUserStore } from "../stores/useUserStore";
 
 
 const {borderColorConfig} = useTailwindConfig()
-// const { getTweets } = usePost();
+const { getTweets } = usePost();
 
 
 const user = useUserStore();
 const loading = ref(false);
-// const postDetails = usePostStore();
+const postDetails = usePostStore();
 
 
 onMounted(async() => {
   user.initialize();
-  // try {
-  //   loading.value = true;
-  //   const response = await getTweets();
-  // } catch (error) {
-  //   console.log(error);
-  // } finally {
-  //   loading.value = false;
-  // }
+  try {
+    loading.value = true;
+    const response = await getTweets();
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
 });
 
-// const tweets = postDetails.posts
+const tweets = postDetails.posts
 
 
 definePageMeta({

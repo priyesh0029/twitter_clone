@@ -97,6 +97,14 @@
           ><div class="font-bold w-6 h-6"><PencilIcon /></div
         ></UIButtonPost>
       </div>
+       <nuxt-link :to="'/login'" >
+        <SidebarLeftTab active @click="handleLogout">
+          <template v-slot:icon>
+            <LogoutIcon />
+          </template>
+          <template v-slot:name> Logout </template>
+        </SidebarLeftTab>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -112,7 +120,9 @@ import {
   UserGroupIcon,
   DocumentTextIcon,
   PencilIcon,
+  LogoutIcon
 } from "@heroicons/vue/solid"; // for solid icons
+import { computed } from "vue";
 import { useUserStore } from "~/stores/useUserStore";
 
 const userStore = useUserStore();
@@ -120,6 +130,9 @@ const colorMode = useColorMode();
 
 const userId = computed(() => {
   return userStore.userInfo.id;
+});
+const user = computed(() => {
+  return userStore.userInfo.name;
 });
 
 const isDark = computed({
@@ -130,4 +143,9 @@ const isDark = computed({
     colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
   },
 });
+
+const handleLogout = ()=>{
+  userStore.clearUserInfo()
+   userStore.clearToken()
+}
 </script>

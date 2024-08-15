@@ -12,8 +12,6 @@
 
 <script setup>
 import { useUserStore } from "../stores/useUserStore";
-// import { usePostStore } from "~/stores/usePostStore";
-
 
 const {borderColorConfig} = useTailwindConfig()
 const { getTweets } = usePost();
@@ -24,8 +22,20 @@ const loading = ref(false);
 const postDetails = usePostStore();
 
 
-onMounted(async() => {
-  user.initialize();
+// onMounted(async() => {
+//   user.initialize();
+//   try {
+//     loading.value = true;
+//     const response = await getTweets();
+//   } catch (error) {
+//     console.log(error);
+//   } finally {
+//     loading.value = false;
+//   }
+// });
+
+const fetchData = async () => {
+   user.initialize();
   try {
     loading.value = true;
     const response = await getTweets();
@@ -34,7 +44,9 @@ onMounted(async() => {
   } finally {
     loading.value = false;
   }
-});
+};
+
+fetchData();
 
 const tweets = postDetails.posts
 

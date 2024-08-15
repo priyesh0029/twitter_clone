@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     // '@nuxtjs/toast',
     "@nuxtjs/color-mode",
+    '@nuxtjs/tailwindcss'
+
   ],
   colorMode: {
     preference: "light",
@@ -17,12 +19,6 @@ export default defineNuxtConfig({
   toast: {
     position: "top-right",
     duration: 5000,
-  },
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
   },
   routeRules :{
     '/login' : { ssr : false},

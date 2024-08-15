@@ -2,7 +2,6 @@
 // import { useAuthStore } from '@/store/auth';
 import { useUserStore } from "~/stores/useUserStore";
 import { useNuxtApp } from "#app";
-import { srvLogin, srvSignup } from "~/services/authServices";
 import { srvChangePropic, srvGetWhoToFollow, srvHandleFollow, srvHandleProfile } from "~/services/userServices";
 
 export const useUser = () => {

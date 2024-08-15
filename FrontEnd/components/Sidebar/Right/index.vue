@@ -15,7 +15,11 @@
 
     <!-- preview card - who to follow -->
     <SidebarRightPreviewCard title="Who to follow">
+      <div class="flex justify-center mt-8" v-if="loading">
+          <UISpinner/>
+      </div>
       <SidebarRightPreviewCardItem
+      v-else
         v-for="(whoToFollow, index) in whoTofollowItems"
         :key="index"
       >
@@ -42,6 +46,7 @@
 
 <script setup>
 
+
 const whatsHappeningItems = ref([
   { item: "SpaceX", count: "18.8k Tweets" },
   { item: "SpaceX", count: "18.8k" },
@@ -50,8 +55,24 @@ const whatsHappeningItems = ref([
 const { whoTofollow,handleFollowUnfollow} = useUser();
 
 const whoTofollowItems = ref([]);
+const loading = ref(false)
 
-onBeforeMount(async () => {
+// onBeforeMount(async () => {
+//   try {
+//     const response = await whoTofollow();
+//     console.log("who to follow response: ", response);
+
+//     whoTofollowItems.value = response.map(item => ({
+//       ...item,
+//       buttonState: 'follow'
+//     }));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+
+const fetchData = async () => {
   try {
     const response = await whoTofollow();
     console.log("who to follow response: ", response);
@@ -62,8 +83,12 @@ onBeforeMount(async () => {
     }));
   } catch (error) {
     console.log(error);
+  } finally {
+    loading.value = false;
   }
-});
+};
+
+fetchData();
 
 async function handleFollow(index,userId) {
   const item = whoTofollowItems.value[index];

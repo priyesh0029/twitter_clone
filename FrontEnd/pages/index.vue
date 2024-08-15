@@ -12,6 +12,8 @@
 
 <script setup>
 import { useUserStore } from "../stores/useUserStore";
+import { usePostStore} from "~/stores/usePostStore";
+
 
 const {borderColorConfig} = useTailwindConfig()
 const { getTweets } = usePost();
@@ -20,7 +22,7 @@ const { getTweets } = usePost();
 const user = useUserStore();
 const loading = ref(false);
 const postDetails = usePostStore();
-
+const tweets = ref([])
 
 // onMounted(async() => {
 //   user.initialize();
@@ -39,6 +41,10 @@ const fetchData = async () => {
   try {
     loading.value = true;
     const response = await getTweets();
+    console.log("response inside the home index pagee : ",response);
+    
+    postDetails.setPosts(response);
+    tweets.value =[...postDetails.posts]
   } catch (error) {
     console.log(error);
   } finally {
@@ -48,7 +54,11 @@ const fetchData = async () => {
 
 fetchData();
 
-const tweets = postDetails.posts
+
+watch(() => postDetails.posts, (newPosts) => {
+  tweets.value = newPosts;
+});
+
 
 
 definePageMeta({

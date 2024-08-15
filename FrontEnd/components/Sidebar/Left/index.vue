@@ -124,8 +124,11 @@ import {
 } from "@heroicons/vue/solid"; // for solid icons
 import { computed } from "vue";
 import { useUserStore } from "~/stores/useUserStore";
+import { usePostStore} from "~/stores/usePostStore";
+
 
 const userStore = useUserStore();
+const postStore = usePostStore()
 const colorMode = useColorMode();
 
 const userId = computed(() => {
@@ -147,5 +150,8 @@ const isDark = computed({
 const handleLogout = ()=>{
   userStore.clearUserInfo()
    userStore.clearToken()
+   userStore.clearUserInfo()
+   postStore.clearPosts()
+
 }
 </script>

@@ -44,9 +44,15 @@ importers:
       pinia:
         specifier: ^2.2.0
         version: 2.2.1(vue@3.4.37)
+      vee-validate:
+        specifier: ^4.13.2
+        version: 4.13.2(vue@3.4.37)
       vue:
         specifier: latest
         version: 3.4.37
+      yup:
+        specifier: ^1.4.0
+        version: 1.4.0
     devDependencies:
       '@iconify-json/heroicons':
         specifier: ^1.1.24
@@ -3044,6 +3050,9 @@ packages:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
 
+  property-expr@2.0.6:
+    resolution: {integrity: sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==}
+
   protocols@2.0.1:
     resolution: {integrity: sha512-/XJ368cyBJ7fzLMwLKv1e4vLxOju2MNAIokcr7meSaNcVbWz/CPcW22cP04mwxOErdA5mwjA8Q6w/cdAQxVn7Q==}
 
@@ -3386,6 +3395,9 @@ packages:
   thenify@3.3.1:
     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
 
+  tiny-case@1.0.3:
+    resolution: {integrity: sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==}
+
   tiny-invariant@1.3.3:
     resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
 
@@ -3405,6 +3417,9 @@ packages:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
 
+  toposort@2.0.2:
+    resolution: {integrity: sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==}
+
   totalist@3.0.1:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
     engines: {node: '>=6'}
@@ -3423,9 +3438,17 @@ packages:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
 
+  type-fest@2.19.0:
+    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
+    engines: {node: '>=12.20'}
+
   type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
+
+  type-fest@4.24.0:
+    resolution: {integrity: sha512-spAaHzc6qre0TlZQQ2aA/nGMe+2Z/wyGk5Z+Ru2VUfdNwT6kWO6TjevOlpebsATEG1EIQ2sOiDszud3lO5mt/Q==}
+    engines: {node: '>=16'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -3552,6 +3575,11 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  vee-validate@4.13.2:
+    resolution: {integrity: sha512-HlpR/6MJ92TW9f135umMZKUqdd/tFQTxLNSf2ImbU4Y/MlLVAUpF1l64VdjTOhbClAqPjCb5p/SqHDxLpUHXrw==}
+    peerDependencies:
+      vue: ^3.4.26
 
   vite-hot-client@0.2.3:
     resolution: {integrity: sha512-rOGAV7rUlUHX89fP2p2v0A2WWvV3QMX2UYq0fRqsWSvFvev4atHWqjwGoKaZT1VTKyLGk533ecu3eyd0o59CAg==}
@@ -3779,6 +3807,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  yup@1.4.0:
+    resolution: {integrity: sha512-wPbgkJRCqIf+OHyiTBQoJiP5PFuAXaWiJK6AmYkzQAh5/c2K9hzSApBZG5wV9KoKSePF7sAxmNSvh/13YHkFDg==}
 
   zhead@2.2.4:
     resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
@@ -7061,6 +7092,8 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
+  property-expr@2.0.6: {}
+
   protocols@2.0.1: {}
 
   proxy-from-env@1.1.0: {}
@@ -7465,6 +7498,8 @@ snapshots:
     dependencies:
       any-promise: 1.3.0
 
+  tiny-case@1.0.3: {}
+
   tiny-invariant@1.3.3: {}
 
   tinyrainbow@1.2.0: {}
@@ -7477,6 +7512,8 @@ snapshots:
 
   toidentifier@1.0.1: {}
 
+  toposort@2.0.2: {}
+
   totalist@3.0.1: {}
 
   tr46@0.0.3: {}
@@ -7487,7 +7524,11 @@ snapshots:
 
   type-fest@0.21.3: {}
 
+  type-fest@2.19.0: {}
+
   type-fest@3.13.1: {}
+
+  type-fest@4.24.0: {}
 
   type-is@1.6.18:
     dependencies:
@@ -7635,6 +7676,12 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   vary@1.1.2: {}
+
+  vee-validate@4.13.2(vue@3.4.37):
+    dependencies:
+      '@vue/devtools-api': 6.6.3
+      type-fest: 4.24.0
+      vue: 3.4.37
 
   vite-hot-client@0.2.3(vite@5.4.0(@types/node@22.2.0)(terser@5.31.6)):
     dependencies:
@@ -7829,6 +7876,13 @@ snapshots:
   ylru@1.4.0: {}
 
   yocto-queue@0.1.0: {}
+
+  yup@1.4.0:
+    dependencies:
+      property-expr: 2.0.6
+      tiny-case: 1.0.3
+      toposort: 2.0.2
+      type-fest: 2.19.0
 
   zhead@2.2.4: {}
 

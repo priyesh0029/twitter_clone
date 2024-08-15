@@ -23,6 +23,7 @@ export const usePost =  () => {
           const response = await srvCreatePost($api, data);
           console.log("response after fetching data creating posst wwwww : ", response);
           postStore.setPosts([response.data,...postStore.posts]);
+          return response.data
       } catch (error) {
        console.log(error);
       }
@@ -34,7 +35,7 @@ export const usePost =  () => {
     try {
         const response = await srvGetPost($api);
         console.log("response after fetching data : ", response);
-        postStore.setPosts(response.data);
+       return response.data
     } catch (error) {
      console.log(error);
     }

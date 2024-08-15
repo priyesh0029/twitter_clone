@@ -25,9 +25,6 @@ import { usePostStore } from "~/stores/usePostStore";
 
 const {borderColorConfig} = useTailwindConfig()
 const loading = ref(false);
-const { getTweets } = usePost();
-
-const postDetails = usePostStore();
 
 const props = defineProps({
   page :{
@@ -40,22 +37,6 @@ const props = defineProps({
   }
 })
 console.log("props.page : ",props.page);
-
-// const tweets = computed(()=> props.page === 'profile'? props.tweets :postDetails.posts )
-
-
-// onMounted(async () => {
-//   try {
-//     loading.value = true;
-//     const response = await getTweets();
-//   } catch (error) {
-//     console.log(error);
-//   } finally {
-//     loading.value = false;
-//   }
-// });
-
-// const isNoTweets = computed(()=> postDetails.posts.length === 0)
 const isNoTweets = computed(()=> props.tweets.length === 0)
 
 </script>

@@ -12,6 +12,11 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss'
 
   ],
+  runtimeConfig: {
+    public: {
+      POST_URL: process.env.POST_URL,
+    },
+  },
   colorMode: {
     preference: "light",
   },

@@ -121,22 +121,22 @@ import {
   DocumentTextIcon,
   PencilIcon,
   LogoutIcon
-} from "@heroicons/vue/solid"; // for solid icons
+} from "@heroicons/vue/solid"; 
 import { computed } from "vue";
-import { useUserStore } from "~/stores/useUserStore";
-import { usePostStore} from "~/stores/usePostStore";
+import { useUserStore } from "~/stores/user";
+import { usePostStore} from "~/stores/post";
 
 
 const userStore = useUserStore();
 const postStore = usePostStore()
 const colorMode = useColorMode();
 
-const userId = computed(() => {
-  return userStore.userInfo.id;
-});
-const user = computed(() => {
-  return userStore.userInfo.name;
-});
+const userId = userStore.userId
+const user =  userStore.name
+
+console.log("users name and id from the store : ",userId,user);
+
+
 
 const isDark = computed({
   get() {
@@ -149,9 +149,11 @@ const isDark = computed({
 
 const handleLogout = ()=>{
   userStore.clearUserInfo()
-   userStore.clearToken()
-   userStore.clearUserInfo()
    postStore.clearPosts()
+   const token = useCookie('token')
+          token.value = ''
+          console.log("token.value : ",token.value);          
+          return navigateTo('/login')
 
 }
 </script>

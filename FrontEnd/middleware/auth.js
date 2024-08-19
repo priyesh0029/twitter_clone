@@ -1,20 +1,17 @@
-
-import { defineNuxtRouteMiddleware, navigateTo } from "#app";
-import { useUserStore } from "~/stores/useUserStore";
+import { useCookie } from '#app';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  const userStore = useUserStore();
+  if (import.meta.client) {
+    const token = useCookie("token").value;
 
-  if (!userStore.isInitialized) {
-    userStore.initialize();
+    console.log("Token from middleware: ", token);
+
+    const isAuthenticated = !!token;
+
+    if (to.path === "/login" && isAuthenticated) {
+      return navigateTo("/");
+    } else if (to.path !== "/login" && !isAuthenticated) {
+      return navigateTo("/login");
+    }
   }
-
-  const isAuthenticated = !!userStore.token;
-
-  if (to.path === "/login" && isAuthenticated) {
-    return navigateTo("/");
-  } else if (to.path !== "/login" && !isAuthenticated) {
-    return navigateTo("/login");
-  }
-  console.log("token from middleware: ", userStore.token);
 });

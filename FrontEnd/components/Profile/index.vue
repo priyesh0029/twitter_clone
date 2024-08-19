@@ -66,7 +66,7 @@
     <div class="flex justify-center items-center mt-8 " v-if="loading">
       <UISpinner/>
     </div>
-    <TweetListFeild v-else page="'profile'" :tweets="tweets"/>
+    <TweetListFeild v-else page="'profile'" :tweets="tweets" :loading="loading"/>
   </div>
 </template>
   
@@ -89,17 +89,6 @@ const userInfo = ref({});
 const tweets = ref([]);
 const loading = ref(false)
 
-// onBeforeMount(async () => {
-//   const response = await handleProfileDetails(props.userId);
-//   console.log('handleProfileDetails inside component profile: ', response);
-//   userInfo.value = response.data[0].user;
-//   if(!response.data[0].id){
-//     tweets.value = [];
-//     }else{
-//     tweets.value = response.data;
-
-//   }
-// });
 
 const fetchData = async () => {
   try {

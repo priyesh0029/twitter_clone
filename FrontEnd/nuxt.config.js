@@ -15,12 +15,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       POST_URL: process.env.POST_URL,
+      BASE_URL : process.env.BASE_URL || 'http://localhost:3001/api'
     },
   },
   colorMode: {
     preference: "light",
   },
-  plugins: ["~/plugins/axios.js"],
+  plugins: ["~/plugins/api.js","~/plugins/toastify.js"],
+
   toast: {
     position: "top-right",
     duration: 5000,

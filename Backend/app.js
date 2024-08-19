@@ -13,11 +13,18 @@ import knex from "./config/knex.js";
 
 const app = express();
 app.use(morgan("dev"));
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, // This allows the server to accept credentials like cookies
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 routes(app,express.Router());
+
+
+
 
 cloudinary.config({
   cloud_name: "dsinpyvxb",

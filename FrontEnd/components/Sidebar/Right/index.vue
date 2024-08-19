@@ -57,7 +57,8 @@ const { whoTofollow,handleFollowUnfollow} = useUser();
 const whoTofollowItems = ref([]);
 const loading = ref(false)
 
-// onBeforeMount(async () => {
+
+// const fetchData = async () => {
 //   try {
 //     const response = await whoTofollow();
 //     console.log("who to follow response: ", response);
@@ -68,28 +69,37 @@ const loading = ref(false)
 //     }));
 //   } catch (error) {
 //     console.log(error);
+//   } finally {
+//     loading.value = false;
 //   }
-// });
+// };
 
-
-const fetchData = async () => {
+// fetchData();
+const { data: whoToFollow, error, status } = await useAsyncData('whoToFollow', async () => {
   try {
-    const response = await whoTofollow();
-    console.log("who to follow response: ", response);
+    return await whoTofollow();    
+  } catch (err) {
+    console.error('Error fetching tweets:', err);
+    throw err;
+  }
+});
 
-    whoTofollowItems.value = response.map(item => ({
+console.log("who to follow from whotofollow composable : ",whoToFollow.value);
+
+
+if (error.value) {
+  console.error('Failed to load tweets:', error.value.message);
+} else {
+  whoTofollowItems.value = whoToFollow.value.map(item => ({
       ...item,
       buttonState: 'follow'
     }));
-  } catch (error) {
-    console.log(error);
-  } finally {
-    loading.value = false;
-  }
-};
+}
 
-fetchData();
+loading.value = status.value !== "success";
 
+
+//to setup follow unfollow function
 async function handleFollow(index,userId) {
   const item = whoTofollowItems.value[index];
   const buttonState = item.buttonState

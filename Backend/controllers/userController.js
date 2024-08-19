@@ -40,7 +40,9 @@ export const userController = {
   handleFollowUnfollow: asyncHandler(async (req, res) => {
     const loggedInUserId = req.query.userId;
     const searchedUserId = req.body.userId;
-    console.log("Request Body: ", req.body, searchedUserId);
+    console.log("Request Body: ", req.body);
+
+    // console.log("Request Body: ", req.body, searchedUserId);
 
     try {
       // Find the user by id

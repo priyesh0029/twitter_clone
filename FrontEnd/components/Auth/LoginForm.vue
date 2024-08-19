@@ -42,9 +42,13 @@
   
   <script setup>
   import { useForm, useField } from 'vee-validate';
+  import { useUserStore } from "~/stores/user";
+  import { useCookie } from '#app';
   import * as yup from 'yup';
   
   const { login } = useAuth();
+  const userStore = useUserStore();
+
   
   const schema = yup.object({
     username: yup.string().required('Username is required'),
@@ -60,12 +64,23 @@
   const { value: password } = useField('password');
   
   const handleLogin = handleSubmit(async (values) => {
-    await login(values);
+   const response = await login(values);
+   console.log("response of login from the backend : ",response);
+   if(response){
     resetForm();
+   userStore.setUserInfo(response.user);
+          console.log("token form the backend :  ",response.token);
+          const token = useCookie('token')
+          token.value = response.token
+          console.log("token.value : ",token.value);
+          
+          return navigateTo('/')
+   }
+   
   });
   
   const handleSignUp = () => {
-    navigateTo('/signup');
+    return navigateTo('/signup');
   };
   
   const isButtonDisabled = computed(() => {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading" class="h-screen flex justify-center items-center">
+    <div v-if="props.loading" class="h-screen flex justify-center items-center">
       <UISpinner/>
     </div>
     <div v-if="isNoTweets">
@@ -21,10 +21,8 @@
 </template>
 
 <script setup>
-import { usePostStore } from "~/stores/usePostStore";
 
 const {borderColorConfig} = useTailwindConfig()
-const loading = ref(false);
 
 const props = defineProps({
   page :{
@@ -33,6 +31,10 @@ const props = defineProps({
   },
   tweets :{
     type : Array,
+    required : true
+  },
+  loading:{
+    type : Boolean,
     required : true
   }
 })

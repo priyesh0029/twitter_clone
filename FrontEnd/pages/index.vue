@@ -1,71 +1,55 @@
 <template>
   <div>
-    <MainSection title="Home" :loading="loading">
+    <MainSection title="Home">
       <div class="border-b" :class="borderColorConfig">
         <TweetForm />
       </div>
-      <!-- <TweetListFeild page="Home" :tweets="tweets"/> -->
-      <TweetListFeild page="Home" :tweets="tweets"/>
+      <TweetListFeild page="Home" :tweets="tweets" :loading="loading" />
     </MainSection>
   </div>
 </template>
 
 <script setup>
-import { useUserStore } from "../stores/useUserStore";
-import { usePostStore} from "~/stores/usePostStore";
+import { usePostStore } from "~/stores/post";
+import { useCookie } from '#app';
 
 
-const {borderColorConfig} = useTailwindConfig()
+const { borderColorConfig } = useTailwindConfig();
 const { getTweets } = usePost();
 
-
-const user = useUserStore();
-const loading = ref(false);
 const postDetails = usePostStore();
-const tweets = ref([])
+const tweets = ref([]);
+const loading = ref(true);
 
-// onMounted(async() => {
-//   user.initialize();
-//   try {
-//     loading.value = true;
-//     const response = await getTweets();
-//   } catch (error) {
-//     console.log(error);
-//   } finally {
-//     loading.value = false;
-//   }
-// });
-
-const fetchData = async () => {
-   user.initialize();
+const {
+  data: tweetArray,
+  error,
+  status,
+} = await useAsyncData("tweets", async () => {
   try {
-    loading.value = true;
-    const response = await getTweets();
-    console.log("response inside the home index pagee : ",response);
-    
-    postDetails.setPosts(response);
-    tweets.value =[...postDetails.posts]
-  } catch (error) {
-    console.log(error);
-  } finally {
-    loading.value = false;
+    return await getTweets();
+  } catch (err) {
+    console.error("Error fetching tweets:", err);
+    throw err;
   }
-};
-
-fetchData();
-
-
-watch(() => postDetails.posts, (newPosts) => {
-  tweets.value = newPosts;
 });
 
+if (error.value) {
+  console.error("Failed to load tweets:", error.value.message);
+} else {
+  postDetails.setPosts(tweetArray.value.data);
+  tweets.value = postDetails.posts;
+}
 
+loading.value = status.value !== "success";
+watch(
+  () => postDetails.posts,
+  (newPosts) => {
+    tweets.value = newPosts;
+  }
+);
 
 definePageMeta({
-  middleware : 'auth'
-})
+  middleware: "auth",
+});
 </script>
-
-
-
-

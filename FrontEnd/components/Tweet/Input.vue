@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from "~/stores/useUserStore";
+import { useUserStore } from "~/stores/user";
 import { UserCircleIcon } from "@heroicons/vue/solid";
 
 const { borderColorConfig } = useTailwindConfig();

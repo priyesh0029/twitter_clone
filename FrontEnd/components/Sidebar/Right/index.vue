@@ -77,7 +77,7 @@ const loading = ref(false)
 // fetchData();
 const { data: whoToFollow, error, status } = await useAsyncData('whoToFollow', async () => {
   try {
-    return await whoTofollow();    
+    return whoTofollow();    
   } catch (err) {
     console.error('Error fetching tweets:', err);
     throw err;

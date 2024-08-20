@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="props.loading" class="h-screen flex justify-center items-center">
+    <div v-if="loading" class="h-screen flex justify-center items-center">
       <UISpinner/>
     </div>
     <div v-if="isNoTweets">
@@ -10,7 +10,7 @@
     </div>
     <div
       v-else
-      v-for="tweet in props.tweets"
+      v-for="tweet in tweets"
       :key="tweet.id"
       class="pb-4 border-b cursor-pointer hover:bg-gray-100 dark:hover:bg-dim-300 transitionConfig"
       :class="borderColorConfig"

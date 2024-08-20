@@ -69,7 +69,12 @@
   const schema = yup.object({
     name: yup.string().required('Name is required'),
     username: yup.string().required('Username is required'),
-    email: yup.string().email('Invalid email address').required('Email is required'),
+    email: yup.string()
+    .email('Invalid email address')
+    .matches(
+    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+    'Please enter a valid email address')
+    .required('Email is required'),
     password: yup.string().required('Password is required'),
     // .min(6, 'Password must be at least 6 characters long'),
     repassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Re-enter your password'),
@@ -96,7 +101,7 @@
   });
   
   const handleLogin = () => {
-    navigateTo('/login');
+    return navigateTo('/login');
   };
   
   const isButtonDisabled = computed(() => {

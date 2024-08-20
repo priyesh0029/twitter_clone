@@ -1,10 +1,10 @@
 // composables/useAuth.js
-import { useUserStore } from "~/stores/user";
+import { userStore } from "~/stores/userStore";
 import { useNuxtApp } from "#app";
 
 
 export const useUser = () => {
-  const userStore = useUserStore();
+  const userInfo = userStore();
   const { $customApi } = useNuxtApp();
   const { $toast } = useNuxtApp();
 
@@ -17,14 +17,8 @@ export const useUser = () => {
         return response
     } catch (error) {
      console.log(error);
-     $toast({
-      text: error?.message || 'failed to load follow suggestions', 
-      style: {
-        background: "rgba(255, 0, 0, 0.7)", 
-        borderRadius: "8px", 
-        color: "white",
-      }
-    }).showToast();
+    $toast.error(error?.message ||  'failed to load follow suggestions');
+
     }
   };
 
@@ -37,14 +31,7 @@ export const useUser = () => {
         return response
     } catch (error) {
      console.log(error);
-     $toast({
-      text: error?.message || 'failed to handle follow or unfollow request', 
-      style: {
-        background: "rgba(255, 0, 0, 0.7)", 
-        borderRadius: "8px", 
-        color: "white",
-      }
-    }).showToast();
+    $toast.error(error?.message ||  'failed to handle follow or unfollow request');
     }
   }
 
@@ -57,14 +44,8 @@ export const useUser = () => {
         return response
     } catch (error) {
      console.log(error);
-     $toast({
-      text: error?.message || 'failed to fetch profile data ', 
-      style: {
-        background: "rgba(255, 0, 0, 0.7)", 
-        borderRadius: "8px", 
-        color: "white",
-      }
-    }).showToast();
+    $toast.error(error?.message ||   'failed to fetch profile data ');
+
     }
   }
 
@@ -87,14 +68,8 @@ export const useUser = () => {
      
   // } catch (error) {
   //  console.log(error);
-  // $toast({
-  //   text: error?.message || 'Login failed', 
-  //   style: {
-  //     background: "rgba(255, 0, 0, 0.7)", 
-  //     borderRadius: "8px", 
-  //     color: "white",
-  //   }
-  // }).showToast();
+  $toast.error(error?.message ||   'failed to change profile picture ');
+
   // }
 };
 

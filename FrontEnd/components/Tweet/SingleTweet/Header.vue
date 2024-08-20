@@ -18,7 +18,7 @@
 
 <script setup>
 import { UserCircleIcon } from "@heroicons/vue/solid";
-import {humanizeTime} from "../../../utils/moment"
+import {humanizeTime} from "../../../utils/day"
 
 const props = defineProps({
     tweet :{

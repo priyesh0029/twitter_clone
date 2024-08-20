@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "light",
   },
-  plugins: ["~/plugins/api.js","~/plugins/toastify.js"],
+  plugins: ["~/plugins/api.js","~/plugins/toastify.js","~/plugins/fetch.js"],
 
   toast: {
     position: "top-right",

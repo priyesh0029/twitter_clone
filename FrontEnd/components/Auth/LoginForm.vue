@@ -42,12 +42,13 @@
   
   <script setup>
   import { useForm, useField } from 'vee-validate';
-  import { useUserStore } from "~/stores/user";
+  // import { useUserStore } from "~/stores/user";
+  import { userStore } from '~/stores/userStore';
   import { useCookie } from '#app';
   import * as yup from 'yup';
   
   const { login } = useAuth();
-  const userStore = useUserStore();
+  const user = userStore();
 
   
   const schema = yup.object({
@@ -68,7 +69,7 @@
    console.log("response of login from the backend : ",response);
    if(response){
     resetForm();
-   userStore.setUserInfo(response.user);
+   user.setUserInfo(response.user);
           console.log("token form the backend :  ",response.token);
           const token = useCookie('token')
           token.value = response.token

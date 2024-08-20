@@ -1,31 +1,28 @@
 // composables/useAuth.js
-import { useUserStore } from "~/stores/user";
+// import { useUserStore } from "~/stores/user";
 import { useCookie } from '#app';
-
+import { userStore } from '~/stores/userStore';
+import {srvLogin} from '~/services/api/authServices'
 
 export const useAuth = () => {
   const { $customApi } = useNuxtApp();
   const { $toast } = useNuxtApp();
-  const userStore = useUserStore();
+  const user = userStore();
 
 
   const login = async (credentials) => {
     try {
-        console.log("custom api : ",$customApi)
+        // console.log("custom api : ",$customApi)
         const response = await $customApi.post('/auth/login', credentials);
+        // const response = await srvLogin(credentials)
+
 
         console.log("response after fetching data : ", response);
          return response.data
     } catch (error) {
       console.log("error for the auth fetch : ",error.message);
-        $toast({
-          text: error?.message || 'Login failed', 
-          style: {
-            background: "rgba(255, 0, 0, 0.7)", 
-            borderRadius: "8px", 
-            color: "white",
-          }
-        }).showToast();
+        $toast.error(error?.message || 'Login failed');
+
       
     }
   };
@@ -36,21 +33,14 @@ export const useAuth = () => {
       const {data} = await $customApi.post('/auth/signup', credentials);
 
       console.log("response after fetching data : ", data);
-        userStore.setUserInfo(data.user);
+      user.setUserInfo(data.user);
         console.log("token form the backend :  ",data.token);
           const token = useCookie('token')
           token.value = data.token
           
         return navigateTo("/")
     } catch (error) {
-      $toast({
-        text: error?.message || 'Signup failed', 
-        style: {
-          background: "rgba(255, 0, 0, 0.7)", 
-          borderRadius: "8px", 
-          color: "white",
-        }
-      }).showToast();
+      $toast.error(error?.message || 'Signup failed');
       console.log(error);
 
     }

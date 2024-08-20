@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from "~/stores/user";
+import { userStore } from "~/stores/userStore";
 import { UserCircleIcon } from "@heroicons/vue/solid";
 
 const { borderColorConfig } = useTailwindConfig();
@@ -84,7 +84,7 @@ const inputImageUrls = ref([]);
 const imageInput = ref();
 const selectedFiles = ref(null);
 const emits = defineEmits(["onSubmit"]);
-const user = useUserStore();
+const user = userStore();
 const text = ref("");
 
 const isDisabled = computed(()=> text.value === '')
@@ -114,7 +114,7 @@ function handleImageChange(event) {
   });
 }
 
-onMounted(() => {
-  user.initialize();
-});
+// onMounted(() => {
+//   user.initialize();
+// });
 </script>

@@ -122,38 +122,38 @@ import {
   PencilIcon,
   LogoutIcon
 } from "@heroicons/vue/solid"; 
-import { computed } from "vue";
-import { useUserStore } from "~/stores/user";
-import { usePostStore} from "~/stores/post";
+import { userStore } from "~/stores/userStore";
+import { tweetStore } from "~/stores/tweetStore";
+import { storeToRefs } from 'pinia'
 
 
-const userStore = useUserStore();
-const postStore = usePostStore()
+const user = userStore(); 
+const postStore = tweetStore();
 const colorMode = useColorMode();
+const {userId} = storeToRefs(user)
 
-const userId = userStore.userId
-const user =  userStore.name
-
-console.log("users name and id from the store : ",userId,user);
-
-
+console.log("users name and id from the store : ", userId);
 
 const isDark = computed({
   get() {
     return colorMode.value === "dark";
   },
-  set() {
-    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
+  set(value) {
+    colorMode.preference = value ? "dark" : "light";
   },
 });
 
-const handleLogout = ()=>{
-  userStore.clearUserInfo()
-   postStore.clearPosts()
-   const token = useCookie('token')
-          token.value = ''
-          console.log("token.value : ",token.value);          
-          return navigateTo('/login')
+const handleLogout = () => {
+  user.clearUserInfo();
+  postStore.clearPosts();
+  const token = useCookie('token');
+  token.value = '';
+  console.log("token.value : ", token.value);          
+  return navigateTo('/login');
+};
 
-}
+onMounted(() => {
+  user.initialize();
+});
 </script>
+

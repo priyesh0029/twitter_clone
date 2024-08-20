@@ -1,9 +1,9 @@
-import { usePostStore } from "~/stores/post";
+import { tweetStore } from "~/stores/tweetStore";
 import { useNuxtApp } from "#app";
 
 
 export const usePost = () => {
-  const postStore = usePostStore();
+  const postStore = tweetStore();
   const { $customApi } = useNuxtApp();
   const { $toast } = useNuxtApp();
 
@@ -24,16 +24,10 @@ export const usePost = () => {
       const response = await $customApi.post('/tweet/create', data);
       console.log("response after fetching data creating post: ", response);
       postStore.setPosts([response.data, ...postStore.posts]);
+      $toast.success('successfully posted your tweet !');
       return response;
     } catch (error) {
-      $toast({
-        text: error?.message || 'failed to post your tweet !', 
-        style: {
-          background: "rgba(255, 0, 0, 0.7)", 
-          borderRadius: "8px", 
-          color: "white",
-        }
-      }).showToast();
+      $toast.error(error?.message || 'failed to post your tweet !');
     }
   };
 
@@ -43,14 +37,7 @@ export const usePost = () => {
       console.log("response after fetching data: ", response);
       return response;
     } catch (error) {
-      $toast({
-        text: error?.message || 'failed to fetch tweets !', 
-        style: {
-          background: "rgba(255, 0, 0, 0.7)", 
-          borderRadius: "8px", 
-          color: "white",
-        }
-      }).showToast();
+      $toast.error(error?.message ||  'failed to fetch tweets !');
     }
   };
 

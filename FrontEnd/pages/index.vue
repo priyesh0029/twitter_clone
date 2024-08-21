@@ -24,9 +24,9 @@ const {
   data: tweetArray,
   error,
   status,
-} = await useAsyncData('tweets', async () => {
+} = await useAsyncData('tweets',() => {
   try {
-    return await getTweets();
+    return getTweets();
   } catch (err) {
     console.error('Error fetching tweets:', err);
     throw err;

@@ -75,7 +75,7 @@ const loading = ref(false)
 // };
 
 // fetchData();
-const { data: whoToFollow, error, status } = await useAsyncData('whoToFollow', async () => {
+const { data: whoToFollow, error, status } = await useAsyncData('whoToFollow', () => {
   try {
     return whoTofollow();    
   } catch (err) {

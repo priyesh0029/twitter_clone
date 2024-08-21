@@ -3,10 +3,7 @@ import { useNuxtApp } from '#app';
 
 const useApi = () => {
     // const { $customFetch } = useNuxtApp();
-    const { BASE_URL } = useNuxtApp().$config.public;
-
-    // console.log("$customFetch $customFetch : ",useNuxtApp() );
-    
+    const { BASE_URL } = useNuxtApp().$config.public;    
 
     const apiFetch = async (url, options = {}) => {
         const { method = 'GET', body, headers = {}, params } = options;
@@ -27,7 +24,7 @@ const useApi = () => {
 
         try {
             const fullUrl = `${BASE_URL}${url}${queryString}`;
-            const response = await useNuxtApp().$fetch(fullUrl, fetchOptions);
+            const response = await $fetch(fullUrl, fetchOptions);
             return response; 
         } catch (error) {
             console.error('Error in apiFetch:', error.message);

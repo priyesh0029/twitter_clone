@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@nuxt/ui",
-    // '@nuxtjs/toast',
     "@nuxtjs/color-mode",
     '@nuxtjs/tailwindcss'
 
@@ -21,7 +20,7 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "light",
   },
-  plugins: ["~/plugins/api.js","~/plugins/toastify.js","~/plugins/fetch.js"],
+  plugins: ["~/plugins/toastify.js"],
 
   toast: {
     position: "top-right",

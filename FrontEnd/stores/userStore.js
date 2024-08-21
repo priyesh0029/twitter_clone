@@ -76,12 +76,13 @@ export const userStore = defineStore('user', () => {
   function initialize() {
     if (typeof window !== 'undefined') {
       const cookieData = userInfoCookie.value;
+      console.log("cookieData inside user store: ", cookieData);
       try {
         // Check if cookieData is a string that needs parsing
         const decodedData = typeof cookieData === 'string'
           ? JSON.parse(cookieData)
           : cookieData || {};
-        
+          console.log("decodedData before userInfoo.vlue inside user store: ", decodedData);
         userInfo.value = decodedData;
         console.log("decodedData inside user store: ", userInfo.value);
       } catch (error) {

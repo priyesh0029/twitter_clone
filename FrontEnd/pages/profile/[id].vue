@@ -8,7 +8,7 @@
 
 <script setup>
 const route =  useRoute()
-const userId = route.params._id || null
+const userId = route.params.id || null
 
 definePageMeta({
   middleware : 'auth'

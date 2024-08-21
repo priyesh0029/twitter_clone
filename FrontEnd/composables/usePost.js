@@ -1,10 +1,9 @@
 import { tweetStore } from "~/stores/tweetStore";
-import { useNuxtApp } from "#app";
+import {srvCreatePost,srvGetPost} from "~/services/api/postServices"
 
 
 export const usePost = () => {
   const postStore = tweetStore();
-  const { $customApi } = useNuxtApp();
   const { $toast } = useNuxtApp();
 
 
@@ -21,7 +20,7 @@ export const usePost = () => {
 
     try {
      
-      const response = await $customApi.post('/tweet/create', data);
+      const response = await srvCreatePost(data)
       console.log("response after fetching data creating post: ", response);
       postStore.setPosts([response.data, ...postStore.posts]);
       $toast.success('successfully posted your tweet !');
@@ -33,7 +32,7 @@ export const usePost = () => {
 
   const getTweets = async () => {
     try {
-      const response = await $customApi.get('/tweet/tweets');
+      const response = await srvGetPost();
       console.log("response after fetching data: ", response);
       return response;
     } catch (error) {

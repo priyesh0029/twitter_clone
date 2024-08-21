@@ -54,7 +54,7 @@
         <template v-slot:name> Communities </template>
       </SidebarLeftTab>
 
-      <nuxt-link :to="`/profile/${userId}`">
+      <nuxt-link :to="redirectToProfilePage()" >
         <SidebarLeftTab>
           <template v-slot:icon>
             <UserIcon />
@@ -151,6 +151,10 @@ const handleLogout = () => {
   console.log("token.value : ", token.value);          
   return navigateTo('/login');
 };
+
+const redirectToProfilePage = ()=>{
+  return `/profile/${userId.value}`
+}
 
 onMounted(() => {
   user.initialize();

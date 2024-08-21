@@ -2,7 +2,7 @@
 import useApi from '~/utils/api';
 const api = useApi();
 
-export const srvLogin = async (credentials) => {
+export const authenticateUser = async (credentials) => {
     try {
         console.log("custom api on auth service : ",api)
       const response = await api.post('/auth/login', credentials);

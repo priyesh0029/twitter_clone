@@ -57,23 +57,6 @@ const { whoTofollow,handleFollowUnfollow} = useUser();
 const whoTofollowItems = ref([]);
 const loading = ref(false)
 
-
-// const fetchData = async () => {
-//   try {
-//     const response = await whoTofollow();
-//     console.log("who to follow response: ", response);
-
-//     whoTofollowItems.value = response.map(item => ({
-//       ...item,
-//       buttonState: 'follow'
-//     }));
-//   } catch (error) {
-//     console.log(error);
-//   } finally {
-//     loading.value = false;
-//   }
-// };
-
 // fetchData();
 const { data: whoToFollow, error, status } = await useAsyncData('whoToFollow', () => {
   try {

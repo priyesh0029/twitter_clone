@@ -1,19 +1,19 @@
 import useApi from '~/utils/api';
 const api = useApi();
 
-export const srvGetWhoToFollow = async () => {
+export const fetchFollowSuggestions = async () => {
     try {
       const response = await api.get('/user/whotofollow')
       console.log("response from the user service : ",response);
       
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      throw new Error(error.response?.data?.message || 'failed to load follow suggestions');
     }
   };
 
 
-  export const srvHandleFollow = async (userId) => {
+  export const manageFollowAction = async (userId) => {
     try {
         console.log("userId : ",userId);
         
@@ -22,11 +22,11 @@ export const srvGetWhoToFollow = async () => {
       
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      throw new Error(error.response?.data?.message || 'failed to handle follow or unfollow request');
     }
   };
 
-  export const srvHandleProfile = async (userId) => {
+  export const fetchUserProfile = async (userId) => {
     try {
         console.log("userId : ",userId);
         
@@ -35,11 +35,11 @@ export const srvGetWhoToFollow = async () => {
       
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      throw new Error(error.response?.data?.message ||  'failed to fetch profile data');
     }
   };
 
-//   export const srvChangePropic = async (data) => {
+//   export const updateProfilePicture = async (data) => {
 //     try {
 //       const response = await api.post('/user/changepropic', data,{
 //         headers: {

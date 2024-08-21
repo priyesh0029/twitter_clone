@@ -1,17 +1,16 @@
 // composables/useAuth.js
 import { userStore } from "~/stores/userStore";
-import {srvGetWhoToFollow,srvHandleFollow,srvHandleProfile,} from "~/services/api/userServices"
+import {fetchFollowSuggestions,manageFollowAction,fetchUserProfile,} from "~/services/api/userServices"
 
 
 export const useUser = () => {
-  const { $customApi } = useNuxtApp();
   const { $toast } = useNuxtApp();
 
 
 
   const whoTofollow = async () => {
     try {
-        const response = await srvGetWhoToFollow()
+        const response = await fetchFollowSuggestions()
         console.log("response after fetching data whoTofollow : ", response);
         return response
     } catch (error) {
@@ -25,7 +24,7 @@ export const useUser = () => {
     console.log("userId 11 : ",  userId);
     
     try {
-        const response = await srvHandleFollow({userId})
+        const response = await manageFollowAction({userId})
         console.log("response after fetching data handleFollowUnfollow: ", response);
         return response
     } catch (error) {
@@ -38,7 +37,7 @@ export const useUser = () => {
     console.log("userId 11 : ",  userId);
     
     try {
-        const response = await srvHandleProfile(userId)
+        const response = await fetchUserProfile(userId)
         console.log("response after fetching data handleProfileDetails: ", response);
         return response
     } catch (error) {

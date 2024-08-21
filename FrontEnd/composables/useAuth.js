@@ -1,7 +1,7 @@
 // composables/useAuth.js
 import { useCookie } from '#app';
 import { userStore } from '~/stores/userStore';
-import {srvLogin, srvSignup} from '~/services/api/authServices'
+import {authenticateUser, registerUser} from '~/services/api/authServices'
 
 export const useAuth = () => {
   const { $toast } = useNuxtApp();
@@ -10,7 +10,7 @@ export const useAuth = () => {
 
   const login = async (credentials) => {
     try {
-        const response = await srvLogin(credentials)
+        const response = await authenticateUser(credentials)
         console.log("response after fetching data : ", response);
          return response.data
     } catch (error) {
@@ -24,7 +24,7 @@ export const useAuth = () => {
   const signup = async (credentials) => {
     console.log("signup credentials : ", credentials);
     try {
-      const data = await srvSignup(credentials)
+      const data = await registerUser(credentials)
       console.log("response after fetching data : ", data);
       user.setUserInfo(data.user);
         console.log("token form the backend :  ",data.token);

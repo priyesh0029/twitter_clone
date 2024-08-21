@@ -1,9 +1,10 @@
 // utils/api.js
-import { useNuxtApp } from '#app';
+// import { useNuxtApp } from '#app';
 
 const useApi = () => {
     // const { $customFetch } = useNuxtApp();
     const { BASE_URL } = useNuxtApp().$config.public;    
+    // const { BASE_URL } =  'http://localhost:3001/api'
 
     const apiFetch = async (url, options = {}) => {
         const { method = 'GET', body, headers = {}, params } = options;

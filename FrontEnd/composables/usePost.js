@@ -1,5 +1,5 @@
 import { tweetStore } from "~/stores/tweetStore";
-import {srvCreatePost,srvGetPost} from "~/services/api/postServices"
+import {publishTweet,fetchAllTweets} from "~/services/api/postServices"
 
 
 export const usePost = () => {
@@ -20,7 +20,7 @@ export const usePost = () => {
 
     try {
      
-      const response = await srvCreatePost(data)
+      const response = await publishTweet(data)
       console.log("response after fetching data creating post: ", response);
       postStore.setPosts([response.data, ...postStore.posts]);
       $toast.success('successfully posted your tweet !');
@@ -32,7 +32,7 @@ export const usePost = () => {
 
   const getTweets = async () => {
     try {
-      const response = await srvGetPost();
+      const response = await fetchAllTweets();
       console.log("response after fetching data: ", response);
       return response;
     } catch (error) {

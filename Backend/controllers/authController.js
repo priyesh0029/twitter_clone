@@ -140,13 +140,13 @@ export const authControllers = {
     });
 
     // Set token as a cookie
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: false,
-    //   sameSite: "lax",
-    //   path: "/",
-    //   maxAge: 24 * 60 * 60 * 1000,
-    // });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       success: true,
@@ -201,13 +201,13 @@ export const authControllers = {
     console.log("token  : ", token);
 
     // Set token as a cookie
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: false,
-    //   sameSite: "lax",
-    //   path: "/",
-    //   maxAge: 24 * 60 * 60 * 1000,
-    // });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,

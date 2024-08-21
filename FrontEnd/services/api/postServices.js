@@ -2,7 +2,7 @@
 import useApi from '~/utils/api';
 const api = useApi();
 
-export const srvCreatePost = async (data) => {
+export const publishTweet = async (data) => {
     try {
       const response = await api.post('/tweet/create', data);
       return response;
@@ -12,7 +12,7 @@ export const srvCreatePost = async (data) => {
   };
 
 
-  export const srvGetPost = async () => {
+  export const fetchAllTweets = async () => {
     try {
       const response = await api.get('/tweet/tweets')
       return response;

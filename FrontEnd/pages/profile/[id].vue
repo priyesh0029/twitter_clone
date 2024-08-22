@@ -1,7 +1,9 @@
 <template>
     <div>
         <MainSection title="Profile"> 
-            <Profile :userId="userId" class="w-full"/>
+            <ClientOnly>
+                <Profile :userId="userId" class="w-full"/>
+            </ClientOnly>            
         </MainSection>
     </div>
 </template>

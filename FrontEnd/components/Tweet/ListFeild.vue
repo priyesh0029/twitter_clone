@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div v-if="loading" class="h-screen flex justify-center items-center">
-      <UISpinner/>
-    </div>
     <div v-if="isNoTweets">
        <div class="flex justify-center mt-10 bg-white dark:bg-black">
         <h1 class="text-black dark:text-white">No Tweets for you..!</h1>
@@ -33,10 +30,6 @@ const props = defineProps({
     type : Array,
     required : true
   },
-  loading:{
-    type : Boolean,
-    required : true
-  }
 })
 console.log("props.page : ",props.page);
 const isNoTweets = computed(()=> props.tweets.length === 0)

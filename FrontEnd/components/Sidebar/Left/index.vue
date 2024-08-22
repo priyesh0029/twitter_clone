@@ -54,7 +54,7 @@
         <template v-slot:name> Communities </template>
       </SidebarLeftTab>
 
-      <nuxt-link :to="redirectToProfilePage()" >
+      <nuxt-link :to="redirectToProfilePage" >
         <SidebarLeftTab>
           <template v-slot:icon>
             <UserIcon />
@@ -132,6 +132,8 @@ const postStore = tweetStore();
 const colorMode = useColorMode();
 const {userId} = storeToRefs(user)
 
+const userData = useCookie('userInfo').value
+
 console.log("users name and id from the store : ", userId);
 
 const isDark = computed({
@@ -147,14 +149,17 @@ const handleLogout = () => {
   user.clearUserInfo();
   postStore.clearPosts();
   const token = useCookie('token');
-  token.value = '';
+  token.value = null;
   console.log("token.value : ", token.value);          
   return navigateTo('/login');
 };
 
-const redirectToProfilePage = ()=>{
-  return `/profile/${userId.value}`
-}
+const redirectToProfilePage = computed(()=>{
+  console.log("from the redirect profile function : ",userData.id);  
+  return `/profile/${userData.id}`
+})
+
+
 
 onMounted(() => {
   user.initialize();

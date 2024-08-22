@@ -66,7 +66,7 @@
     <div class="flex justify-center items-center mt-8 " v-if="loading">
       <UISpinner/>
     </div>
-    <TweetListFeild v-else page="'profile'" :tweets="tweets" :loading="loading"/>
+    <TweetListFeild v-else page="'profile'" :tweets="tweets"/>
   </div>
 </template>
   

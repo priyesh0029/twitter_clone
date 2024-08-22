@@ -114,7 +114,4 @@ function handleImageChange(event) {
   });
 }
 
-// onMounted(() => {
-//   user.initialize();
-// });
 </script>

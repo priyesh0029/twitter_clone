@@ -28,6 +28,6 @@ export default defineNuxtConfig({
   },
   routeRules :{
     '/login' : { ssr : false},
-    '/' :{ssr : false},
+    // '/' :{ssr : false},
   }
 });

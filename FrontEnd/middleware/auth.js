@@ -1,7 +1,6 @@
-import { useCookie } from '#app';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  if (import.meta.client) {
+ 
     const token = useCookie("token").value;
 
     console.log("Token from middleware: ", token);
@@ -13,5 +12,4 @@ export default defineNuxtRouteMiddleware((to, from) => {
     } else if (to.path !== "/login" && !isAuthenticated) {
       return navigateTo("/login");
     }
-  }
 });

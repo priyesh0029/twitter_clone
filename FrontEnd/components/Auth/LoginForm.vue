@@ -44,7 +44,6 @@
   import { useForm, useField } from 'vee-validate';
   // import { useUserStore } from "~/stores/user";
   import { userStore } from '~/stores/userStore';
-  import { useCookie } from '#app';
   import * as yup from 'yup';
   
   const { login } = useAuth();
@@ -71,7 +70,10 @@
     resetForm();
    user.setUserInfo(response.user);
           console.log("token form the backend :  ",response.token);
-          const token = useCookie('token')
+          const token = useCookie('token',{
+                    path: '/',
+                    maxAge: 60 * 60 * 24 * 30,
+                })
           token.value = response.token
           console.log("token.value : ",token.value);
           

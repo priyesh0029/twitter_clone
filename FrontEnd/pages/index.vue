@@ -4,7 +4,7 @@
       <div class="border-b" :class="borderColorConfig">
         <TweetForm />
       </div>
-      <TweetListFeild page="Home" :tweets="tweets" :loading="loading" />
+      <TweetListFeild page="Home" :tweets="tweets" />
     </MainSection>
   </div>
 </template>
@@ -18,7 +18,6 @@ const { getTweets } = usePost();
 const postDetails = tweetStore();
 
 const tweets = computed(() => postDetails.posts); 
-const loading = ref(true);
 
 const {
   data: tweetArray,
@@ -32,14 +31,13 @@ const {
     throw err;
   }
 });
+console.log("tweets : ",tweetArray);
 
 if (error.value) {
   console.error('Failed to load tweets:', error.value.message);
 } else {
   postDetails.setPosts(tweetArray.value.data);
 }
-
-loading.value = status.value !== 'success';
 
 definePageMeta({
   middleware: 'auth',

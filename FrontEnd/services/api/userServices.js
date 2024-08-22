@@ -1,9 +1,8 @@
 import useApi from '~/utils/api';
-const api = useApi();
 
 export const fetchFollowSuggestions = async () => {
     try {
-      const response = await api.get('/user/whotofollow')
+      const response = await useApi().get('/user/whotofollow')
       console.log("response from the user service : ",response);
       
       return response;
@@ -17,7 +16,7 @@ export const fetchFollowSuggestions = async () => {
     try {
         console.log("userId : ",userId);
         
-      const response = await api.post('/user/hanldefollow',userId)
+      const response = await useApi().post('/user/hanldefollow',userId)
       console.log("response from the user service : ",response);
       
       return response;
@@ -30,7 +29,7 @@ export const fetchFollowSuggestions = async () => {
     try {
         console.log("userId : ",userId);
         
-      const response = await api.get(`/user/hanldeprofile/${userId}`)
+      const response = await useApi().get(`/user/hanldeprofile/${userId}`)
       console.log("response from the user service : ",response);
       
       return response;

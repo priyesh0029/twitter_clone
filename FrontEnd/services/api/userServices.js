@@ -2,7 +2,7 @@ import useApi from '~/utils/api';
 
 export const fetchFollowSuggestions = async () => {
     try {
-      const response = await useApi().get('/user/whotofollow')
+      const response = await useApi().get('/user/who-to-follow')
       console.log("response from the user service : ",response);
       
       return response;
@@ -16,7 +16,7 @@ export const fetchFollowSuggestions = async () => {
     try {
         console.log("userId : ",userId);
         
-      const response = await useApi().post('/user/hanldefollow',userId)
+      const response = await useApi().post('/user/hanlde-follow',userId)
       console.log("response from the user service : ",response);
       
       return response;
@@ -29,7 +29,7 @@ export const fetchFollowSuggestions = async () => {
     try {
         console.log("userId : ",userId);
         
-      const response = await useApi().get(`/user/hanldeprofile/${userId}`)
+      const response = await useApi().get(`/user/hanlde-profile/${userId}`)
       console.log("response from the user service : ",response);
       
       return response;
@@ -40,7 +40,7 @@ export const fetchFollowSuggestions = async () => {
 
 //   export const updateProfilePicture = async (data) => {
 //     try {
-//       const response = await api.post('/user/changepropic', data,{
+//       const response = await api.post('/user/change-display-image', data,{
 //         headers: {
 //           "Content-Type": "multipart/form-data",
 //         },

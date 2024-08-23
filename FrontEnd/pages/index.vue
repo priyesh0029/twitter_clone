@@ -1,49 +1,45 @@
 <template>
   <div>
-    <MainSection title="Home" :loading="loading">
+    <MainSection title="Home">
       <div class="border-b" :class="borderColorConfig">
         <TweetForm />
       </div>
-      <!-- <TweetListFeild page="Home" :tweets="tweets"/> -->
-      <TweetListFeild page="Home"/>
+      <TweetListFeild page="Home" :tweets="tweets" />
     </MainSection>
   </div>
 </template>
 
 <script setup>
-import { useUserStore } from "../stores/useUserStore";
-// import { usePostStore } from "~/stores/usePostStore";
+import { tweetStore } from '~/stores/tweetStore';
+import { usePost } from '~/composables/usePost'; 
 
+const { borderColorConfig } = useTailwindConfig();
+const { getTweets } = usePost();
+const postDetails = tweetStore();
 
-const {borderColorConfig} = useTailwindConfig()
-// const { getTweets } = usePost();
+const tweets = computed(() => postDetails.posts); 
 
-
-const user = useUserStore();
-const loading = ref(false);
-// const postDetails = usePostStore();
-
-
-onMounted(async() => {
-  user.initialize();
-  // try {
-  //   loading.value = true;
-  //   const response = await getTweets();
-  // } catch (error) {
-  //   console.log(error);
-  // } finally {
-  //   loading.value = false;
-  // }
+const {
+  data: tweetArray,
+  error,
+  status,
+} = await useAsyncData('tweets',() => {
+  try {
+    return getTweets();
+  } catch (err) {
+    console.error('Error fetching tweets:', err);
+    throw err;
+  }
 });
+console.log("tweets : ",tweetArray);
 
-// const tweets = postDetails.posts
-
+if (error.value) {
+  console.error('Failed to load tweets:', error.value.message);
+} else {
+  postDetails.setPosts(tweetArray.value.data);
+}
 
 definePageMeta({
-  middleware : 'auth'
-})
+  middleware: 'auth',
+});
 </script>
-
-
-
-

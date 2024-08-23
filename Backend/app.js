@@ -13,24 +13,31 @@ import knex from "./config/knex.js";
 
 const app = express();
 app.use(morgan("dev"));
-app.use(cors());
+dotenv.config();
+const corsOptions = {
+  origin: process.env.BASE_URL,
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 routes(app,express.Router());
 
+
+
+
 cloudinary.config({
-  cloud_name: "dsinpyvxb",
-  api_key: "684988441571688",
-  api_secret: "khe2yZ1Pack2_JqCNCw-fv03aNI",
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY ,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
 
-dotenv.config();
 const PORT = process.env.PORT;
 
 
 app.listen(PORT, () => {
-  console.log(`connected to port ${PORT}`);
+ console.log(`connected to port ${PORT}`);
 });
 
 

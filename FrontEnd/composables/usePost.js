@@ -1,50 +1,47 @@
-import { srvCreatePost, srvGetPost } from "~/services/postServices";
-import { usePostStore } from "~/stores/usePostStore";
+import { tweetStore } from "~/stores/tweetStore";
+import {publishTweet,fetchAllTweets} from "~/services/api/postServices"
 
-export const usePost =  () => {
-    const { $api } = useNuxtApp();
-    const postStore = usePostStore();
-  
-    const createTweet = async (formData) => {
-        const data = new FormData()
-        data.append('text',formData.text)
-        formData.mediaFiles.forEach((file)=>{
-          data.append(`image`, file);
-        })
 
-        data.forEach((key, value) => {
-          console.log(
-            "post in front end formdata key and value  : ",
-            key,
-            value
-          );
-        });
-      try {
-          const response = await srvCreatePost($api, data);
-          console.log("response after fetching data creating posst wwwww : ", response);
-          postStore.setPosts([response.data,...postStore.posts]);
-      } catch (error) {
-       console.log(error);
-      }
-    };
+export const usePost = () => {
+  const postStore = tweetStore();
+  const { $toast } = useNuxtApp();
 
-    //to get all the tweets for home page
-    const getTweets = async () => {
-      
+
+  const createTweet = async (formData) => {
+    const data = new FormData();
+    data.append('text', formData.text);
+    formData.mediaFiles.forEach((file) => {
+      data.append('image', file);
+    });
+
+    data.forEach((key, value) => {
+      console.log("post in front end formdata key and value: ", key, value);
+    });
+
     try {
-        const response = await srvGetPost($api);
-        console.log("response after fetching data : ", response);
-        postStore.setPosts(response.data);
+     
+      const response = await publishTweet(data)
+      console.log("response after fetching data creating post: ", response);
+      postStore.setPosts([response.data, ...postStore.posts]);
+      $toast.success('successfully posted your tweet !');
+      return response;
     } catch (error) {
-     console.log(error);
+      $toast.error(error?.message || 'failed to post your tweet !');
     }
   };
 
-  
-  
-    return {
-        createTweet,
-        getTweets
-    };
+  const getTweets = async () => {
+    try {
+      const response = await fetchAllTweets();
+      console.log("response after fetching data: ", response);
+      return response;
+    } catch (error) {
+      $toast.error(error?.message ||  'failed to fetch tweets !');
+    }
   };
-  
+
+  return {
+    createTweet,
+    getTweets
+  };
+};

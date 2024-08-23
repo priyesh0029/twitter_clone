@@ -19,8 +19,6 @@ export const tweetController = {
       if (!Array.isArray(filenames) || !filenames.every(item => typeof item === 'string')) {
         throw new Error('imgNames should be an array of strings.');
       }
-      // const formattedArrayString = `{${filenames.join(',')}}`;
-
 
       // Create tweet details
       const tweetDetails = {

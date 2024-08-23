@@ -26,7 +26,10 @@
     </div>
 
     <!-- User Info -->
-    <div class="text-center mt-4">
+    <div class="flex justify-center items-center mt-8 " v-if="loading">
+      <UISpinner/>
+    </div>
+    <div v-else class="text-center mt-4">
       <div class="text-xl font-semibold">{{ userInfo.name }}</div>
       <div class="text-gray-500">@{{ userInfo.username }}</div>
       <div class="text-gray-400 mt-2 flex items-center justify-center">
@@ -60,7 +63,10 @@
         {{ tab }}
       </button>
     </div>
-    <TweetListFeild page="'profile'" :tweets="tweets"/>
+    <div class="flex justify-center items-center mt-8 " v-if="loading">
+      <UISpinner/>
+    </div>
+    <TweetListFeild v-else page="'profile'" :tweets="tweets"/>
   </div>
 </template>
   
@@ -81,14 +87,29 @@ const inputImageUrl = ref(null);
 const selectedFile = ref(null);
 const userInfo = ref({});
 const tweets = ref([]);
+const loading = ref(false)
 
 
-onBeforeMount(async () => {
-  const response = await handleProfileDetails(props.userId);
+const fetchData = async () => {
+  try {
+    loading.value = true
+    const response = await handleProfileDetails(props.userId);
   console.log('handleProfileDetails inside component profile: ', response);
   userInfo.value = response.data[0].user;
-   tweets.value = response.data;
-});
+  if(!response.data[0].id){
+    tweets.value = [];
+    }else{
+    tweets.value = response.data;
+
+  }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+fetchData();
 
 const tabs = ["Post", "Replies", "Highlight", "Likes", "Media", "Community"];
 const activeTab = ref("Post");
@@ -120,7 +141,7 @@ function handleImageClick() {
 }
 
 const formattedJoinDate = computed(() => {
-  return userInfo.value.createdAt ? moment(userInfo.value.createdAt).format('MMMM YYYY') : '';
+  return userInfo.value.created_at ? moment(userInfo.value.created_at).format('MMMM YYYY') : '';
 });
 
 const followersCount = computed(() => {

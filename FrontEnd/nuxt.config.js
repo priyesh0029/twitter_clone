@@ -7,25 +7,27 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "@nuxt/ui",
-    // '@nuxtjs/toast',
     "@nuxtjs/color-mode",
+    '@nuxtjs/tailwindcss'
+
   ],
+  runtimeConfig: {
+    public: {
+      POST_URL: process.env.POST_URL,
+      BASE_URL : process.env.BASE_URL || 'http://localhost:3001/api'
+    },
+  },
   colorMode: {
     preference: "light",
   },
-  plugins: ["~/plugins/axios.js"],
+  plugins: ["~/plugins/toastify.js"],
+
   toast: {
     position: "top-right",
     duration: 5000,
   },
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
   routeRules :{
     '/login' : { ssr : false},
-    '/' :{ssr : false},
+    // '/' :{ssr : false},
   }
 });

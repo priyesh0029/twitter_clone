@@ -40,7 +40,9 @@ export const userController = {
   handleFollowUnfollow: asyncHandler(async (req, res) => {
     const loggedInUserId = req.query.userId;
     const searchedUserId = req.body.userId;
-    console.log("Request Body: ", req.body, searchedUserId);
+    console.log("Request Body: ", req.body);
+
+    // console.log("Request Body: ", req.body, searchedUserId);
 
     try {
       // Find the user by id
@@ -92,12 +94,22 @@ export const userController = {
 
     try {
       // Fetch user's tweets
-      const tweets = await Tweet.query()
+      let tweets = []
+       tweets = await Tweet.query()
         .where({ userId: userId, isDeleted: false })
         .withGraphFetched('user')
         .orderBy('created_at', 'DESC');
 
       console.log("User with user and tweet details:", tweets);
+
+      if(tweets.length === 0){
+       const user = await User.query()
+        .where({ id: userId, isDeleted: false })
+        .first()
+
+        tweets.push({user})
+       
+      }
 
       return res.status(200).json({
         success: true,

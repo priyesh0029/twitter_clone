@@ -1,6 +1,8 @@
 import User from '../models/User.js';
 import Tweet from '../models/Tweet.js';
 import asyncHandler from 'express-async-handler';
+import { HttpStatus } from '../utilities/errorTypes.js';
+import { ErrorMessage } from '../utilities/errorMessage.js';
 
 export const userController = {
   getWhoToFollow: asyncHandler(async (req, res) => {
@@ -11,7 +13,8 @@ export const userController = {
       console.log("Logged user from the user controller: ", user);
 
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        // return res.status(404).json({ message: "User not found" });
+        throw new Error(ErrorMessage.USER_NOT_FOUND_ERR,HttpStatus.NOT_FOUND);
       }
 
       // Ensure following is an array
@@ -33,7 +36,8 @@ export const userController = {
       res.status(200).json(followList);
     } catch (error) {
       console.error("Error fetching who to follow list:", error);
-      res.status(500).json({ message: "Internal server error" });
+      // res.status(500).json({ message: "Internal server error" });
+      throw new Error(ErrorMessage.SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }),
 
@@ -49,7 +53,9 @@ export const userController = {
       const user = await User.query().findById(searchedUserId).select('id', 'followers');
 
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        // return res.status(404).json({ message: "User not found" });
+        throw new Error(ErrorMessage.USER_NOT_FOUND_ERR,HttpStatus.NOT_FOUND);
+
       }
 
       const followersArray = user.followers || [];
@@ -80,7 +86,8 @@ export const userController = {
       }
     } catch (error) {
       console.error("Error handling follow/unfollow:", error);
-      res.status(500).json({ message: "Error occurred during follow/unfollow request" });
+      // res.status(500).json({ message: "Error occurred during follow/unfollow request" });
+      throw new Error(ErrorMessage.SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }),
 
@@ -89,7 +96,8 @@ export const userController = {
     console.log("userId: ", userId);
 
     if (typeof userId !== 'string') {
-      return res.status(400).json({ success: false, message: 'Invalid user ID' });
+      // return res.status(400).json({ success: false, message: 'Invalid user ID' });
+      throw new Error(ErrorMessage.INVALID_USER_ID,HttpStatus.BAD_REQUEST);
     }
 
     try {
@@ -106,7 +114,6 @@ export const userController = {
        const user = await User.query()
         .where({ id: userId, isDeleted: false })
         .first()
-
         tweets.push({user})
        
       }
@@ -118,7 +125,9 @@ export const userController = {
       });
     } catch (error) {
       console.error('Error fetching user profile:', error);
-      return res.status(500).json({ success: false, message: 'Internal server error' });
+      // return res.status(500).json({ success: false, message: 'Internal server error' });
+      throw new Error(ErrorMessage.SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
   }),
 
@@ -134,7 +143,8 @@ export const userController = {
       const userId = req.query.userId;
 
       if (!userId || typeof userId !== 'string') {
-        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+        // return res.status(400).json({ success: false, message: 'Invalid user ID' });
+        throw new Error(ErrorMessage.INVALID_USER_ID,HttpStatus.BAD_REQUEST);
       }
 
       console.log("User inside change profile picture function: ", userId, filename);
@@ -152,14 +162,17 @@ export const userController = {
           message: 'Profile image changed successfully',
         });
       } else {
-        return res.status(404).json({
-          success: false,
-          message: 'User not found',
-        });
+        // return res.status(404).json({
+        //   success: false,
+        //   message: 'User not found',
+        // });
+        throw new Error(ErrorMessage.USER_NOT_FOUND_ERR,HttpStatus.NOT_FOUND);
       }
     } catch (error) {
       console.error('Error changing profile picture:', error);
-      return res.status(500).json({ success: false, message: 'Internal server error' });
+      // return res.status(500).json({ success: false, message: 'Internal server error' });
+      throw new Error(ErrorMessage.SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
   }),
 };

@@ -24,8 +24,8 @@ const useApi = () => {
             const response = await $fetch(fullUrl, fetchOptions);
             return response; 
         } catch (error) {
-            console.error('Error in apiFetch:', error.message);
-            throw new Error(error.message || 'An error occurred');
+            console.error('Error in apiFetch:', error.response);
+            throw new Error(error.response._data.message || 'An error occurred');
         }
     };
 

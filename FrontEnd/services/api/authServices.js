@@ -8,7 +8,7 @@ export const authenticateUser = async (credentials) => {
     } catch (error) {
       console.log("error from auth service : ",error);
       
-      throw new Error(error.response?.data?.message || 'Login failed');
+      throw new Error(error || 'Login failed');
     }
   };
   
@@ -19,7 +19,7 @@ export const authenticateUser = async (credentials) => {
       console.log(response);
       return response.data;
     } catch (error) {
-        throw new Error(error.response.data.message || 'Signup failed');
+        throw new Error(error || 'Signup failed');
     }
   };
   

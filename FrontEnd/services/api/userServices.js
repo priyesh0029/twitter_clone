@@ -7,7 +7,7 @@ export const fetchFollowSuggestions = async () => {
       
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'failed to load follow suggestions');
+      throw new Error(error  || 'failed to load follow suggestions');
     }
   };
 
@@ -21,7 +21,7 @@ export const fetchFollowSuggestions = async () => {
       
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'failed to handle follow or unfollow request');
+      throw new Error(error || 'failed to handle follow or unfollow request');
     }
   };
 
@@ -34,7 +34,7 @@ export const fetchFollowSuggestions = async () => {
       
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message ||  'failed to fetch profile data');
+      throw new Error(error ||  'failed to fetch profile data');
     }
   };
 

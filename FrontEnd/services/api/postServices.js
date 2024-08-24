@@ -6,7 +6,7 @@ export const publishTweet = async (data) => {
       const response = await useApi().post('/tweet/create', data);
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'failed to post your tweet !');
+      throw new Error(error || 'failed to post your tweet !');
     }
   };
 
@@ -16,7 +16,7 @@ export const publishTweet = async (data) => {
       const response = await useApi().get('/tweet/tweets')
       return response;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'failed to fetch tweets !');
+      throw new Error(error || 'failed to fetch tweets !');
     }    
   };
 

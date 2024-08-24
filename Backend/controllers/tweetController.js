@@ -2,6 +2,8 @@ import User from '../models/User.js';
 import Tweet from '../models/Tweet.js';
 import asyncHandler from 'express-async-handler';
 import AppError from '../utilities/appError.js';
+import { ErrorMessage } from '../utilities/errorMessage.js';
+import { HttpStatus } from '../utilities/errorTypes.js';
 
 export const tweetController = {
   createTweet: asyncHandler(async (req, res) => {
@@ -42,7 +44,9 @@ export const tweetController = {
       });
     } catch (error) {
       console.error('Error creating tweet:', error);
-      return res.status(500).json({ success: false, message: 'Internal server error' });
+      // return res.status(500).json({ success: false, message: 'Internal server error' });
+      throw new Error(ErrorMessage.SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
   }),
 
@@ -55,7 +59,9 @@ export const tweetController = {
       const user = await User.query().findById(userId);
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        // return res.status(404).json({ message: 'User not found' });
+        throw new Error(ErrorMessage.USER_NOT_FOUND_ERR,HttpStatus.NOT_FOUND);
+
       }
 
       const followingIds = user.following || [];
@@ -73,7 +79,8 @@ export const tweetController = {
       });
     } catch (error) {
       console.error('Error fetching tweets:', error);
-      res.status(500).json({ message: 'Internal server error' });
+      // res.status(500).json({ message: 'Internal server error' });
+      throw new Error(ErrorMessage.SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }),
 };

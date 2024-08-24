@@ -9,8 +9,7 @@ const errorHandlingMiddleware=(err, req, res, next)=>{
         res.status(err.statusCode).json({ errors: err.status, errorMessage: err.message })
     } else {
         console.log("inside middlware : ", err.statusCode,err.message,err.status);
-        res.status(err.statusCode).json({
-            
+        res.status(err.statusCode).json({ 
             status: err.status,
             message: err.message
         })

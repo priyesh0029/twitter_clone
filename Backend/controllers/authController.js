@@ -2,6 +2,8 @@ import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 import AppError from "../utilities/appError.js";
 import { authServices } from "../middlewares/authServices.js";
+import { HttpStatus } from "../utilities/errorTypes.js";
+import { ErrorMessage } from "../utilities/errorMessage.js";
 
 export const authControllers = {
   // User Register
@@ -17,8 +19,8 @@ export const authControllers = {
 
     if (existingUser) {
       throw new AppError(
-        "User with the same email or username already exists",
-        401
+       ErrorMessage.SAME_USER_SIGNUP_ERR,
+        HttpStatus.UNAUTHORIZED
       );
     }
 
@@ -37,15 +39,6 @@ export const authControllers = {
     const token = await authServices.generateToken({
       id: newUser.id,
       role: "user",
-    });
-
-    // Set token as a cookie
-    res.cookie("token", token, {
-      // httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.status(201).json({
@@ -69,7 +62,7 @@ export const authControllers = {
 
     // Validate input
     if (!username || !password) {
-      throw new AppError("Login credential and password are required", 400);
+      throw new AppError(ErrorMessage.CREDENTIAL_REQUIRED_ERR, HttpStatus.BAD_REQUEST);
     }
 
     // Find the user based on email or username
@@ -80,7 +73,7 @@ export const authControllers = {
       .first();
 
     if (!user) {
-      throw new AppError("Invalid login credentials", 401);
+      throw new AppError(ErrorMessage.INVALID_CREDENTIAL_ERR, HttpStatus.UNAUTHORIZED);
     }
 
     // Compare the password
@@ -90,7 +83,7 @@ export const authControllers = {
     );
 
     if (!isPasswordMatch) {
-      throw new AppError("Invalid login credentials", 401);
+      throw new AppError(ErrorMessage.INVALID_CREDENTIAL_ERR, HttpStatus.UNAUTHORIZED);
     }
 
     // Generate JWT token
@@ -99,15 +92,6 @@ export const authControllers = {
       role: "user",
     });
     console.log("token  : ", token);
-
-    // Set token as a cookie
-    res.cookie("token", token, {
-      // httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      path: "/",
-      maxAge: 24 * 60 * 60 * 1000,
-    });
 
     res.status(200).json({
       success: true,
@@ -123,15 +107,4 @@ export const authControllers = {
     });
   }),
 
-  logoutUser: (req, res) => {
-    // Clear the cookie
-    res.cookie("token", "", {
-      // httpOnly: true,
-      secure: false,
-      sameSite: "none",
-      maxAge: 0,
-    });
-
-    res.status(200).json({ success: true, message: "Logged out successfully" });
-  },
 };

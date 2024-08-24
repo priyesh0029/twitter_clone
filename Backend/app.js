@@ -9,8 +9,6 @@ import AppError from "./utilities/appError.js";
 import { v2 as cloudinary } from "cloudinary";
 import knex from "./config/knex.js";
 
-
-
 const app = express();
 app.use(morgan("dev"));
 dotenv.config();
@@ -18,14 +16,12 @@ const corsOptions = {
   origin: process.env.BASE_URL,
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 routes(app,express.Router());
-
-
-
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -35,14 +31,13 @@ cloudinary.config({
 
 const PORT = process.env.PORT;
 
-
 app.listen(PORT, () => {
  console.log(`connected to port ${PORT}`);
 });
 
-
 //db config
-//knex.once connected
+// knex.once connected
+
 knex.raw('SELECT 1+1 as result').then(() => {
   console.log('connected to database');
 }).catch((err) => {
@@ -50,10 +45,7 @@ knex.raw('SELECT 1+1 as result').then(() => {
   process.exit(1);
 });
 
-
-
-app.use(errorHandlingMiddleware) 
-
+app.use(errorHandlingMiddleware)
 app.all('*', (req,res,next) => {
     next(new AppError('Not found', 404));
 });

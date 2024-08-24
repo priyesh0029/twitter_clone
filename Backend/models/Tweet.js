@@ -29,7 +29,6 @@ class Tweet extends Model {
   }
 
   $beforeInsert() {
-    this.id = uuidv4();
     this.created_at = new Date().toISOString();
     this.updated_at = new Date().toISOString();
   }

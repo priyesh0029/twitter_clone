@@ -54,7 +54,7 @@
         <template v-slot:name> Communities </template>
       </SidebarLeftTab>
 
-      <nuxt-link :to="`/profile/${userId}`">
+      <nuxt-link :to="redirectToProfilePage" >
         <SidebarLeftTab>
           <template v-slot:icon>
             <UserIcon />
@@ -121,31 +121,48 @@ import {
   DocumentTextIcon,
   PencilIcon,
   LogoutIcon
-} from "@heroicons/vue/solid"; // for solid icons
-import { computed } from "vue";
-import { useUserStore } from "~/stores/useUserStore";
+} from "@heroicons/vue/solid"; 
+import { userStore } from "~/stores/userStore";
+import { tweetStore } from "~/stores/tweetStore";
+import { storeToRefs } from 'pinia'
 
-const userStore = useUserStore();
+
+const user = userStore(); 
+const postStore = tweetStore();
 const colorMode = useColorMode();
+const {userId} = storeToRefs(user)
 
-const userId = computed(() => {
-  return userStore.userInfo.id;
-});
-const user = computed(() => {
-  return userStore.userInfo.name;
-});
+const userData = useCookie('userInfo').value
+
+console.log("users name and id from the store : ", userId);
 
 const isDark = computed({
   get() {
     return colorMode.value === "dark";
   },
-  set() {
-    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
+  set(value) {
+    colorMode.preference = value ? "dark" : "light";
   },
 });
 
-const handleLogout = ()=>{
-  userStore.clearUserInfo()
-   userStore.clearToken()
-}
+const handleLogout = () => {
+  user.clearUserInfo();
+  postStore.clearPosts();
+  const token = useCookie('token');
+  token.value = null;
+  console.log("token.value : ", token.value);          
+  return navigateTo('/login');
+};
+
+const redirectToProfilePage = computed(()=>{
+  console.log("from the redirect profile function : ",userData.id);  
+  return `/profile/${userData.id}`
+})
+
+
+
+onMounted(() => {
+  user.initialize();
+});
 </script>
+

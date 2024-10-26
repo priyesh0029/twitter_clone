@@ -1,5 +1,6 @@
 <script setup>
-import {POST_URL} from '../../utils/postUrl'
+const config = useRuntimeConfig();
+const postUrl = config.public.POST_URL;
 const props = defineProps({
   items: {
     type: Array,
@@ -11,8 +12,9 @@ const props = defineProps({
   }
 });
 
+
 const baseUrl = computed(() => {
-  return props.type === 'tweetView' ? POST_URL : '';
+  return props.type === 'tweetView' ? postUrl : '';
 });
 </script>
 

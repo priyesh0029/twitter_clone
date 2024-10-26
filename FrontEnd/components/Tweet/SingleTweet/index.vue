@@ -1,17 +1,17 @@
 <template>
     <div>
       <div>
-        <TweetSingleTweetHeader :tweet="props.tweet"/>
+        <TweetSingleTweetHeader :tweet="tweet"/>
       </div>
       <div class="ml-16 mb-2">
         <p class="flex-shrink w-auto font-medium text-gray-800 dark:text-white">
-          {{ props.tweet.caption }}
+          {{ tweet.caption }}
         </p>
       </div>
   
       <div class="pl-14 pr-4 lg:pl-18">
         <TweetImageCarousel
-          :items="props.tweet.imgNames"
+          :items="tweet.imgNames"
           class="rounded-2xl max-h-72"
           :class="borderColorConfig"
           :type="'tweetView'"
